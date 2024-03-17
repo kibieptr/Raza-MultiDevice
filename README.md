@@ -29,6 +29,10 @@
 - Group Bot [`Join`](https://chat.whatsapp.com/BnOSrWAV8MF0B6NCEBy22U)
 - Saluran Info Bot [`Join`](https://whatsapp.com/channel/0029VaMdlQu6WaKg7bj4kk1u)
 
+## Usage Bot
+
+- Command Bot : .menu (untuk memulai fitur bot pada chat)
+
 ### Installation
 
 ### `Render`
