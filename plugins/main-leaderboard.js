@@ -1,0 +1,53 @@
+let handler = async (m, { conn, args, participants }) => {
+    let users = Object.entries(global.db.data.users).map(([key, value]) => {
+      return {...value, jid: key}
+    })
+    let sortedExp = users.map(toNumber('exp')).sort(sort('exp'))
+    let sortedLim = users.map(toNumber('limit')).sort(sort('limit'))
+    let usersExp = sortedExp.map(enumGetKey)
+    let usersLim = sortedLim.map(enumGetKey)
+    console.log(participants)
+    let len = args[0] && args[0].length > 0 ? Math.min(10, Math.max(parseInt(args[0]), 10)) : Math.min(10, sortedExp.length)
+    let text = `
+  • *XP Leaderboard Top ${len}* •
+  Kamu: *${usersExp.indexOf(m.sender) + 1}* dari *${usersExp.length}*
+  
+  ${sortedExp.slice(0, len).map(({ jid, exp }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *${exp} Exp*`).join`\n`}
+  
+  • *Limit Leaderboard Top ${len}* •
+  Kamu: *${usersLim.indexOf(m.sender) + 1}* dari *${usersLim.length}*
+  
+  ${sortedLim.slice(0, len).map(({ jid, limit }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *${limit} Limit*`).join`\n`}
+  `.trim()
+  let lbnya = 'https://files.cults3d.com/uploaders/21646250/illustration-file/4fcb5125-8c8b-40b1-ae64-62feea6cb2a2/ousamaall.png'
+    conn.sendFile(m.chat, lbnya, '', text, m, {
+      contextInfo: {
+        mentionedJid: [...usersExp.slice(0, len), ...usersLim.slice(0, len)].filter(v => !participants.some(p => v === p.jid))
+      }
+    })
+  }
+  handler.help = ['leaderboard']
+  handler.tags = ['main']
+  handler.command = /^(leaderboard|lb)$/i
+  handler.group = true
+  handler.private = false
+  
+  handler.fail = null
+  
+  module.exports = handler;
+  
+  function sort(property, ascending = true) {
+    if (property) return (...args) => args[ascending & 1][property] - args[!ascending & 1][property]
+    else return (...args) => args[ascending & 1] - args[!ascending & 1]
+  }
+  
+  function toNumber(property, _default = 0) {
+    if (property) return (a, i, b) => {
+      return {...b[i], [property]: a[property] === undefined ? _default : a[property]}
+    }
+    else return a => a === undefined ? _default : a
+  }
+  
+  function enumGetKey(a) {
+    return a.jid
+  }
