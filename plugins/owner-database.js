@@ -1,19 +1,17 @@
 let fs = require("fs");
 let handler = async (m, { conn, text }) => {
-  m.reply("Tunggu Sebentar, Proses Getting File database.json");
-  let db = fs.readFileSync("./database.json");
-  conn.sendFile(m.chat, db, "database.json", m);
+  m.reply("Tunggu Sebentar, Sedang mengambil file Database");
+  let sesi = await fs.readFileSync("./database.json");
+  return await conn.sendMessage(
+    m.chat,
+    { document: sesi, mimetype: "application/json", fileName: "database.json" },
+    { quoted: m }
+  );
 };
-handler.help = ["getdb", "getdatabase"].map((v) => v + " <teks>");
+handler.help = ["getdb"];
 handler.tags = ["owner"];
-handler.command = /^(db|getdb)$/i;
-handler.rowner = true;
-handler.owner = true;
-handler.mods = true;
-handler.premium = false;
-handler.private = true;
-handler.admin = true;
+handler.command = /^(getdb)$/i;
 handler.register = true;
-handler.fail = null;
+handler.mods = true;
 
 module.exports = handler;
