@@ -17,7 +17,7 @@ let handler = async (m, { text, usedPrefix, command }) => {
 
 handler.help = ['sfp', 'df'].map(v => v + ' <teks>');
 handler.tags = ['owner'];
-handler.command = /^(sf|df)$/i;
+handler.command = /^(sfp|df)$/i;
 handler.rowner = true;
 handler.register = true;
 module.exports = handler;

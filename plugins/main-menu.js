@@ -47,7 +47,7 @@ let handler = async (m, { conn }) => {
     },
   });
   conn.sendMessage(m.chat, {
-    audio: fs.readFileSync("./media/one.m4a"),
+    audio: fs.readFileSync("./vn/menunya.mp3"),
     quoted: m,
   });
 };
