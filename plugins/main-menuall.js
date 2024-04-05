@@ -23,6 +23,7 @@ let tags = {
   xp: "MENU EXP",
   fun: "MENU FUN",
   game: "MENU GAME",
+  rpg: "RPG GAME",
   github: "MENU GITHUB",
   group: "MENU GROUP",
   image: "MENU IMAGE",

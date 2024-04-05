@@ -1,6 +1,6 @@
 {
   "name": "Raza-Multi-Device",
-  "version": "7.2.1",
+  "version": "7.2.5",
   "description": "Raza-Multi-Device WhatsApp Bot",
   "depecrated": false,
   "main": "index.js",
