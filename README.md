@@ -29,7 +29,7 @@
 
 - Group Bot [`Join`](https://chat.whatsapp.com/BnOSrWAV8MF0B6NCEBy22U)
 - Saluran Info Bot [`Join`](https://whatsapp.com/channel/0029VaMdlQu6WaKg7bj4kk1u)
-- Number For Whatsapp Bot : [Klik Disini](https://wa.me/6285163124075)
+- Number For Whatsapp Bot : [`Klik Disini`](https://wa.me/6285163124075)
 
 ## Usage Bot
 
