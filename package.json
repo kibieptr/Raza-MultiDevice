@@ -31,6 +31,7 @@
     "@adiwajshing/keyed-db": "^0.2.4",
     "@bochilteam/scraper": "^3.0.0",
     "@vitalets/google-translate-api": "^9.0.0",
+    "knights-canvas" : "1.3.7-a",
     "async": "^3.2.4",
     "awesome-phonenumber": "^2.64.0",
     "axios": "^0.27.2",

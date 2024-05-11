@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+const fetch = require('node-fetch')
 let handler = async(m, { conn, args, usedPrefix, command, text }) => {
  
              let timeoute = 1000

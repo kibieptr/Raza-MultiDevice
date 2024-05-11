@@ -39,5 +39,5 @@ handler.help = ["vhd"];
 handler.tags = ["tools"];
 handler.command = /^(vhd|lb)$/i;
 handler.limit = 10;
-
+handler.register = true;
 module.exports = handler;

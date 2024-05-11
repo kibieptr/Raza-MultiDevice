@@ -32,6 +32,6 @@ handler.help = ["remini"];
 handler.tags = ["tools"];
 handler.command = ["remini"];
 handler.premium = false;
-handler.limit = false;
+handler.limit = 5;
 handler.register = true;
 module.exports = handler;

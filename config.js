@@ -1,7 +1,7 @@
-global.owner = ["6287739924485", "6281529762099", "6285733355537"];
-global.creator = ["6285733355537"];
-global.mods = ["6287739924485", "6285733355537", "6281529762099"];
-global.prems = ["6287739924485", "6285733355537", "6281529762099"];
+global.owner = ["6281529762099"];
+global.creator = ["6281529762099"];
+global.mods = ["6281529762099"];
+global.prems = ["6281529762099"];
 global.nameowner = "Kibieptr";
 global.numberowner = "6281529762099";
 global.numberowner1 = "6281529762099";
@@ -19,7 +19,7 @@ global.autobio = false; // Set true untuk mengaktifkan autobio
 global.maxwarn = "3"; // Peringatan maksimum
 
 //INI WAJIB DI ISI!//
-global.btc = "Razaa930";
+global.btc = "Piyyuu";
 //Daftar terlebih dahulu https://api.botcahx.eu.org
 
 //INI OPTIONAL BOLEH DI ISI BOLEH JUGA ENGGA//
@@ -30,7 +30,7 @@ global.APIs = {
   btc: "https://api.botcahx.eu.org",
 };
 global.APIKeys = {
-  "https://api.botcahx.eu.org": "Razaa930",
+  "https://api.botcahx.eu.org": "Piyyuu",
 };
 
 let fs = require("fs");

@@ -40,7 +40,6 @@ let lbnya = 'https://files.cults3d.com/uploaders/21646250/illustration-file/4fcb
     }
   })
 }
-ha
   handler.help = ['leaderboard']
   handler.tags = ['main']
   handler.command = /^(leaderboard|lb)$/i

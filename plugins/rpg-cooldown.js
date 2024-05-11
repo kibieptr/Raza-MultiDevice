@@ -1,6 +1,6 @@
-import { xpRange } from '../lib/levelling.js'
-import fetch from 'node-fetch'
-import fs from 'fs'
+const { xprange } = require('../lib/levelling.js');
+const fetch = require('node-fetch')
+const fs = require('fs')
 
 let handler = async (m, { conn, usedPrefix }) => {
 	

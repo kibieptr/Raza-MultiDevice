@@ -1,4 +1,4 @@
-let { MessageType } = (await import('@adiwajshing/baileys')).default
+const { MessageType } = require('@adiwajshing/baileys');
 
 let handler  = async (m, { conn, command, args, usedPrefix, DevMode }) => {
   let type = (args[0] || '').toLowerCase()
@@ -90,9 +90,9 @@ try {
   }
 }
 
-handler.help = ['belipet']
+handler.help = ['petshop']
 handler.tags = ['rpg']
-handler.command = /^(belipet)/i
+handler.command = /^(petshop)/i
 handler.group = true
 handler.fail = null
 handler.exp = 0
