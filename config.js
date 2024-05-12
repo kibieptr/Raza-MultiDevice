@@ -19,7 +19,7 @@ global.autobio = false; // Set true untuk mengaktifkan autobio
 global.maxwarn = "3"; // Peringatan maksimum
 
 //INI WAJIB DI ISI!//
-global.btc = "Piyyuu";
+global.btc = "ISI API KEY MU";
 //Daftar terlebih dahulu https://api.botcahx.eu.org
 
 //INI OPTIONAL BOLEH DI ISI BOLEH JUGA ENGGA//
@@ -30,7 +30,7 @@ global.APIs = {
   btc: "https://api.botcahx.eu.org",
 };
 global.APIKeys = {
-  "https://api.botcahx.eu.org": "Piyyuu",
+  "https://api.botcahx.eu.org": "ISI API KEY MU",
 };
 
 let fs = require("fs");
