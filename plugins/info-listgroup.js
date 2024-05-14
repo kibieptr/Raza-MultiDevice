@@ -1,46 +1,70 @@
-let handler = async (m, { conn, participants }) => {
+const handler = async (m, { conn, usedPrefix, args }) => {
+const groups = Object.keys(conn.chats)
+  .filter(key => key.endsWith('@g.us'))
+  .map(key => conn.chats[key]);
+const list = groups.map((group, index) => `│ ◦ *${index + 1}.* ${group.subject}`).join('\n');
 
-	let now = new Date() * 1
-	let groups = Object.entries(conn.chats).filter(([jid, chat]) => jid.endsWith('@g.us') && chat.isChats && !chat.metadata?.read_only && !chat.metadata?.announce).map(v => v[0])
-    let txt = ''
-    // let tolgp = `${participants.lenght}`
-    
-    for (let [jid, chat] of Object.entries(conn.chats).filter(([jid, chat]) => jid.endsWith('@g.us') && chat.isChats)) 
-    txt += `${await conn.getName(jid)}\n${jid} [${chat?.metadata?.read_only ? 'Left' : 'Joined'}]\n${db.data.chats[jid] == undefined ? db.data.chats[jid] = {
-      isBanned: false,
-      welcome: false,
-      antiLink: false,
-      delete: true,
-    } : db.data.chats[jid].expired ? msToDate(db.data.chats[jid].expired - now) : '*Tidak Diatur Expired Group*'}
-${db.data.chats[jid].isBanned ? '✅' : '❌'} _Group Banned_
-${db.data.chats[jid].welcome ? '✅' : '❌'} _Auto Welcome_
-${db.data.chats[jid].antiLink ? '✅' : '❌'} _Anti Link_\n\n`
-    m.reply(`List Groups:
-Total Group: ${groups.length}
+  if (args.length === 0) {
+    conn.reply(m.chat, `┌  ◦ *Enter Number for Type Group:*\n${list}\n└——`, m);
+  } else if (args.length === 1 && /^\d+$/.test(args[0])) {
+    const index = parseInt(args[0]) - 1;
+    if (index >= 0 && index < groups.length) {
+      const group = groups[index];
+      const superAdminCount = group.participants.filter(p => p.admin === 'superadmin').length;
+      const adminCount = group.participants.filter(p => p.admin === 'admin').length;
+      const adminList = group.participants.filter(p => p.admin === 'admin').map(a => `- ${a.id.replace(/(\d+)@.+/, '@$1')}`).join('\n');
+      const superAdminList = group.participants.filter(p => p.admin === 'superadmin').map(a => `- ${a.id.replace(/(\d+)@.+/, '@$1')}`).join('\n');
+      const info = `┌  ◦ *Order Group Information ${index + 1}*\n` +
+ `│ ◦ *ID:* ${group.id}\n` +
+ `│ ◦ *Subject:* ${group.subject}\n` +
+ `│ ◦ *Subject Owner:* ${group.subjectOwner}\n` +
+ `│ ◦ *Subject Time Changed:* ${formatTime(group.subjectTime)}\n` +
+ `│ ◦ *Time Created:* ${formatTime(group.creation)}\n` +
+ `│ ◦ *Group Owner:* ${group.owner.replace(/(\d+)@.+/, '@$1')}\n` +
+ `│ ◦ *Description:* ${group.desc}\n` +
+ `│ ◦ *Description ID:* ${group.descId}\n` +
+ `│ ◦ *Restrictions:* ${group.restrict ? 'Yes' : 'No'}\n` +
+ `│ ◦ *Announcement:* ${group.announce ? 'Yes' : 'No'}\n` +
+ `│ ◦ *Total Participants:* ${group.participants.length}\n` +
+ `│ ◦ *Number of Superadmins:* ${superAdminCount}\n` +
+ `│ ◦ *Superadmin List:*\n${superAdminList}\n` +
+ `│ ◦ *Admin Count:* ${adminCount}\n` +
+ `│ ◦ *Admin List:*\n${adminList}\n` +
+ `│ ◦ **Ephemeral Message Duration:* ${formatDuration(group.ephemeralDuration)}\n` +
+ `└——`;
+      await m.reply(
+        info,
+        null,
+        {
+            contextInfo: {
+                mentionedJid: group.participants.map((v) => v.id)
+            }
+        }
+    );
+    } else {
+      conn.reply(m.chat, `┌  ◦ *Enter Number for Type Group:*\n${list}\n└——`, m);
+    }
+  } else {
+    conn.reply(m.chat, `*• Example:* ${usedPrefix + command} *[number]*`, m);
+  }
+};
 
-${txt}
+handler.help = ['gcl','grouplist'].map(a => a + ' *[get list & info group]*');
+handler.tags = ['info'];
+handler.command = /^(gcl|grouplist)$/i;
 
-`.trim())
+module.exports = handler;
 
+function formatTime(timestamp) {
+  const date = new Date(timestamp * 1000);
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 }
 
-handler.help = ['grouplist']
-handler.tags = ['group']
-handler.register = true;
-handler.command = /^(group(s|list)|(s|list)group)$/i
-
-
-module.exports = handler
-
-function msToDate(ms) {
-  temp = ms
-  days = Math.floor(ms / (24 * 60 * 60 * 1000));
-  daysms = ms % (24 * 60 * 60 * 1000);
-  hours = Math.floor((daysms) / (60 * 60 * 1000));
-  hoursms = ms % (60 * 60 * 1000);
-  minutes = Math.floor((hoursms) / (60 * 1000));
-  minutesms = ms % (60 * 1000);
-  sec = Math.floor((minutesms) / (1000));
-  return days + " hari " + hours + " jam " + minutes + " menit";
-  // +minutes+":"+sec;
+function formatDuration(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const formatted = [];
+  if (hours > 0) formatted.push(`${hours} jam`);
+  if (minutes > 0) formatted.push(`${minutes} menit`);
+  return formatted.join(' ');
 }

@@ -1,18 +1,25 @@
-const fs = require("fs");
-const winScore = 100;
+let fetch = require("node-fetch");
+let winScore = 1000;
 async function handler(m) {
   this.game = this.game ? this.game : {};
   let id = "family100_" + m.chat;
-  if (id in this.game)
-    return this.reply(
+  if (id in this.game) {
+    this.reply(
       m.chat,
       "Masih ada kuis yang belum terjawab di chat ini",
       this.game[id].msg
     );
-  let src = JSON.parse(fs.readFileSync("./json/family100.json", "utf-8"));
+    throw false;
+  }
+  let src = await (
+    await fetch(
+      "https://raw.githubusercontent.com/BochilTeam/database/master/games/family100.json"
+    )
+  ).json();
   let json = src[Math.floor(Math.random() * src.length)];
   let caption = `
 *Soal:* ${json.soal}
+
 Terdapat *${json.jawaban.length}* jawaban${
     json.jawaban.find((v) => v.includes(" "))
       ? `
@@ -20,7 +27,8 @@ Terdapat *${json.jawaban.length}* jawaban${
 `
       : ""
   }
-+${winScore} XP tiap jawaban benar
+
++${winScore} Money tiap jawaban benar
     `.trim();
   this.game[id] = {
     id,
@@ -33,6 +41,6 @@ Terdapat *${json.jawaban.length}* jawaban${
 handler.help = ["family100"];
 handler.tags = ["game"];
 handler.command = /^family100$/i;
+handler.group = true;
 handler.register = true;
-handler.game = true;
 module.exports = handler;

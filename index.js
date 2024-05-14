@@ -1,12 +1,12 @@
-const cluster = require("cluster");
-const { spawn } = require("child_process");
-const path = require("path");
-const fs = require("fs");
-const os = require("os");
-const express = require("express");
+const cluster = require('cluster');
+const { spawn } = require('child_process');
+const path = require('path');
+const fs = require('fs');
+const os = require('os');
+const express = require('express');
 const app = express();
 
-// Express.js
+// Express.js 
 const ports = [4000, 3000, 5000, 8000, 8080];
 let availablePortIndex = 0;
 
@@ -16,7 +16,7 @@ function checkPort(port) {
       server.close();
       resolve(true);
     });
-    server.on("error", reject);
+    server.on('error', reject);
   });
 }
 
@@ -25,16 +25,16 @@ async function startServer() {
   const isPortAvailable = await checkPort(port);
 
   if (isPortAvailable) {
-    console.log("\x1b[33m%s\x1b[0m", `🌐 Port ${port} is open`);
-    app.get("/", (req, res) => {
-      res.setHeader("Content-Type", "application/json");
+    console.log('\x1b[33m%s\x1b[0m', `🌐 Port ${port} is open`);
+    app.get('/', (req, res) => {
+      res.setHeader('Content-Type', 'application/json');
       const data = {
-        status: "true",
-        message: "Bot Successfully Activated!",
-        author: "Kibieptr",
+        status: 'true',
+        message: 'Bot Successfully Activated!',
+        author: 'Kibieptr'
       };
       const result = {
-        response: data,
+        response: data
       };
       res.send(JSON.stringify(result, null, 2));
     });
@@ -43,7 +43,7 @@ async function startServer() {
     availablePortIndex++;
 
     if (availablePortIndex >= ports.length) {
-      console.log("No more available ports. Exiting...");
+      console.log('No more available ports. Exiting...');
       process.exit(1);
     } else {
       ports[availablePortIndex] = parseInt(port) + 1;
@@ -66,7 +66,7 @@ function start(file) {
   });
 
   p.on("message", (data) => {
-    console.log("\x1b[36m%s\x1b[0m", `🟢 RECEIVED ${data}`);
+    console.log('\x1b[36m%s\x1b[0m', `🟢 RECEIVED ${data}`);
     switch (data) {
       case "reset":
         p.kill();
@@ -81,29 +81,23 @@ function start(file) {
 
   p.on("exit", (code) => {
     isRunning = false;
-    console.error("\x1b[31m%s\x1b[0m", `Exited with code: ${code}`);
-    start("main.js");
+    console.error('\x1b[31m%s\x1b[0m', `Exited with code: ${code}`);
+    start('main.js');
 
     if (code === 0) return;
 
     fs.watchFile(args[0], () => {
       fs.unwatchFile(args[0]);
-      console.error(
-        "\x1b[31m%s\x1b[0m",
-        `File ${args[0]} has been modified. Script will restart...`
-      );
+	  console.error('\x1b[31m%s\x1b[0m', `File ${args[0]} has been modified. Script will restart...`);
       start("main.js");
     });
   });
 
   p.on("error", (err) => {
-    console.error("\x1b[31m%s\x1b[0m", `Error: ${err}`);
+    console.error('\x1b[31m%s\x1b[0m', `Error: ${err}`);
     p.kill();
     isRunning = false;
-    console.error(
-      "\x1b[31m%s\x1b[0m",
-      `Error occurred. Script will restart...`
-    );
+    console.error('\x1b[31m%s\x1b[0m', `Error occurred. Script will restart...`);
     start("main.js");
   });
 
@@ -111,60 +105,44 @@ function start(file) {
 
   fs.readdir(pluginsFolder, (err, files) => {
     if (err) {
-      console.error(
-        "\x1b[31m%s\x1b[0m",
-        `Error reading plugins folder: ${err}`
-      );
+      console.error('\x1b[31m%s\x1b[0m', `Error reading plugins folder: ${err}`);
       return;
     }
-    console.log(
-      "\x1b[33m%s\x1b[0m",
-      `🟡 Found ${files.length} plugins in folder ${pluginsFolder}`
-    );
+    console.log('\x1b[33m%s\x1b[0m', `🟡 Found ${files.length} plugins in folder ${pluginsFolder}`);
     try {
-      require.resolve("@adiwajshing/baileys");
-      console.log(
-        "\x1b[33m%s\x1b[0m",
-        `🟡 Baileys library version ${
-          require("@adiwajshing/baileys/package.json").version
-        } is installed`
-      );
+      require.resolve('@adiwajshing/baileys');
+      console.log('\x1b[33m%s\x1b[0m', `🟡 Baileys library version ${require('@adiwajshing/baileys/package.json').version} is installed`);
     } catch (e) {
-      console.error("\x1b[31m%s\x1b[0m", `❌ Baileys library is not installed`);
+      console.error('\x1b[31m%s\x1b[0m', `❌ Baileys library is not installed`);
     }
   });
 
-  console.log(
-    `🖥️ \x1b[33m${os.type()}\x1b[0m, \x1b[33m${os.release()}\x1b[0m - \x1b[33m${os.arch()}\x1b[0m`
-  );
+  console.log(`🖥️ \x1b[33m${os.type()}\x1b[0m, \x1b[33m${os.release()}\x1b[0m - \x1b[33m${os.arch()}\x1b[0m`);
   const ramInGB = os.totalmem() / (1024 * 1024 * 1024);
   console.log(`💾 \x1b[33mTotal RAM: ${ramInGB.toFixed(2)} GB\x1b[0m`);
   const freeRamInGB = os.freemem() / (1024 * 1024 * 1024);
   console.log(`💽 \x1b[33mFree RAM: ${freeRamInGB.toFixed(2)} GB\x1b[0m`);
-  console.log("\x1b[33m%s\x1b[0m", `📃 Script by Piyyuuu`);
+  console.log('\x1b[33m%s\x1b[0m', `📃 Script by BOTCAHX`);
 
   setInterval(() => {}, 1000);
 }
 
 start("main.js");
 
-const tmpDir = "./tmp";
-if (!fs.existsSync(tmpDir)) {
-  fs.mkdirSync(tmpDir);
-  console.log("\x1b[33m%s\x1b[0m", `📁 Created directory ${tmpDir}`);
+const tmpDir = './tmp';
+  if (!fs.existsSync(tmpDir)) {
+    fs.mkdirSync(tmpDir);
+    console.log('\x1b[33m%s\x1b[0m', `📁 Created directory ${tmpDir}`);
 }
 
-process.on("unhandledRejection", (reason) => {
-  console.error("\x1b[31m%s\x1b[0m", `Unhandled promise rejection: ${reason}`);
-  console.error(
-    "\x1b[31m%s\x1b[0m",
-    "Unhandled promise rejection. Script will restart..."
-  );
-  start("main.js");
+process.on('unhandledRejection', (reason) => {
+  console.error('\x1b[31m%s\x1b[0m', `Unhandled promise rejection: ${reason}`);
+  console.error('\x1b[31m%s\x1b[0m', 'Unhandled promise rejection. Script will restart...');
+  start('main.js');
 });
 
-process.on("exit", (code) => {
+process.on('exit', (code) => {
   console.error(`Exited with code: ${code}`);
-  console.error("Script will restart...");
-  start("main.js");
+  console.error('Script will restart...');
+  start('main.js');
 });

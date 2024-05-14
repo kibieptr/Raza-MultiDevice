@@ -110,9 +110,9 @@ Pastikan Kamu Memiliki Bahannya
             );
           global.db.data.users[m.sender].iron -= 30;
           global.db.data.users[m.sender].diamond -= 8;
-          global.db.data.users[m.sender].armor += 1;
+          global.db.data.users[m.sender].armor += 5;
           user.armordurability = 50;
-          m.reply("Sukses Membuat 1 Armor");
+          m.reply("Sukses Membuat Armor");
           break;
         case "atm":
           if (user.atm > 0) return m.reply("Kamu Sudah Memilik Ini");

@@ -1,32 +1,27 @@
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-  let panel = `*==> 📮 OPEN PANEL PETRODATYL <===*
-*RAZA STORE* Menyediakan Panel hosting bot WhatsApp murah dah berkualitas  ✅
+  let panel = `*==> 📮 RAZA STORE BY RAZABOTS & PIYYUU 📮 <===*
+*RAZA STORE* Menyediakan berbagai kebutuhan digital murah dah berkualitas  ✅
 
-*INFO PANEL:*
-https://chat.whatsapp.com/JH9qs0DTDpF24c8w4kYqzp
-
-*===> RAM LIST <===*
-📮 _RAM 1GB/CPU 30%= 1K_
-📮 _RAM 2GB/CPU 60%=2K_
-📮 _RAM 3GB/CPU 80%=3K_
-📮 _RAM 4GB/CPU 110%=4K_
-📮 _RAM 5GB/CPU 140%=5K_
-📮 _RAM 6GB/CPU 170%=6K_
-📮 _RAM 7GB/CPU 185%=7K_
-📮 _RAM 8GB/CPU 190%=8K_
-📮 _RAM UNLI/CPU UNLI=15K_
-
-*_SEMUA LIST BERLAKU 1 BULAN_*
-*_( Replace 1x Garansi 5 hari )_*
-
-*===> KEUNTUNGAN  <===*
-*• ✅ MEMBUAT RUNTIME BOT MENJADI AWET*
-*• ✅ ANTI LEMOT*
-*• ✅ MUDAH UNTUK DIGUNAKAN*
+*===> LIST <===*
+📮 _RDP & VPS_
+📮 _Panel Digital Ocean_
+📮 _Panel Linode_
+📮 _Panel Vultr_
+📮 _Domain_
+📮 _Youtube Premium_
+📮 _Spotify_
+📮 _Netflix_
+📮 _Disney Hotstar_
+📮 _Premium Lainnya_
+📮 _Nitro Discord_
+📮 _Dev Badge_
+📮 _Booster Server_
+📮 _Activity Costum_
+📮 _Product Lainnya_
 
 *===> CONTACT PERSON <===*
 info lebih lanjut bisa hubungi nomor ini:
-wa.me/6287739924485`;
+wa.me/6281529762099`;
   conn.reply(m.chat, panel, null);
 };
 handler.customPrefix = /^promosi$/i;

@@ -5,6 +5,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     throw `*Contoh:* ${usedPrefix}${command} https://www.instagram.com/p/ByxKbUSnubS/?utm_source=ig_web_copy_link`;
 
   try {
+    await m.reply(wait);
     const api = await fetch(
       `https://api.botcahx.eu.org/api/dowloader/igdowloader?url=${args[0]}&apikey=${btc}`
     );
@@ -18,7 +19,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
         m.chat,
         res.result[i].url,
         null,
-        `*Instagram Downloader*`,
+        `*Instagram Downloader By Raza MD*`,
         m
       );
     }
@@ -27,9 +28,9 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   }
 };
 
-handler.help = ["instagram"].map((v) => v + " <url>");
+handler.help = ["instagram", "ig"].map((v) => v + " <url>");
 handler.tags = ["downloader"];
-handler.command = /^(igdl|)$/i;
+handler.command = /^(igdl|ig)$/i;
 handler.limit = true;
 handler.register = true;
 module.exports = handler;

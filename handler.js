@@ -64,6 +64,15 @@ module.exports = {
           if (!isNumber(user.emas)) user.emas = 0;
           if (!isNumber(user.arlok)) user.arlok = 0;
 
+          // last racik
+          if (!isNumber(user.lastswordclaim)) user.lastswordclaim = 0;
+          if (!isNumber(user.lastweaponclaim)) user.lastweaponclaim = 0;
+          if (!isNumber(user.lastramuanclaim)) user.lastramuanclaim = 0;
+          if (!isNumber(user.lastpotionclaim)) user.lastpotionclaim = 0;
+          if (!isNumber(user.laststringclaim)) user.laststringclaim = 0;
+          if (!isNumber(user.lastsironclaim)) user.lastsironclaim = 0;
+          if (!isNumber(user.lastsmancingclaim)) user.lastsmancingclaim = 0;
+
           if (!isNumber(user.common)) user.common = 0;
           if (!isNumber(user.as)) user.as = 0;
           if (!isNumber(user.uncommon)) user.uncommon = 0;
@@ -360,6 +369,13 @@ module.exports = {
             griffin: 0,
             griffinlastclaim: 0,
             centaur: 0,
+            lastweaponclaim: 0,
+            lastweaponclaim: 0,
+            lastramuanclaim: 0,
+            lastpotionclaim: 0,
+            laststringclaim: 0,
+            lastsironclaim: 0,
+            lastsmancingclaim: 0,
             centaurlastclaim: 0,
             serigala: 0,
             serigalalastclaim: 0,
@@ -444,8 +460,8 @@ module.exports = {
           if (!("detect" in chat)) chat.detect = true;
           if (!("sWelcome" in chat)) chat.sWelcome = "";
           if (!("sBye" in chat)) chat.sBye = "";
-          if (!("sPromote" in chat)) chat.sPromote = "";
-          if (!("sDemote" in chat)) chat.sDemote = "";
+          if (!("sPromote" in chat)) chat.sPromote = "@user telah di promote";
+          if (!("sDemote" in chat)) chat.sDemote = "@user telah di demoted";
           if (!("delete" in chat)) chat.delete = true;
           if (!("antiLink" in chat)) chat.antiLink = true;
           if (!("viewonce" in chat)) chat.viewonce = false;
@@ -457,8 +473,8 @@ module.exports = {
             detect: true,
             sWelcome: "",
             sBye: "",
-            sPromote: "",
-            sDemote: "",
+            sPromote: "promoted new admin:* @user",
+            sDemote: "demoted from admin:* @user",
             delete: true,
             antiLink: true,
             viewonce: false,
@@ -467,15 +483,23 @@ module.exports = {
       } catch (e) {
         console.error(e);
       }
+
       if (opts["nyimak"]) return;
       if (!m.fromMe && opts["self"]) return;
       if (opts["pconly"] && m.chat.endsWith("g.us")) return;
       if (opts["gconly"] && !m.chat.endsWith("g.us")) return;
       if (opts["swonly"] && m.chat !== "status@broadcast") return;
       if (typeof m.text !== "string") m.text = "";
-      if (opts["queque"] && m.text) {
-        this.msgqueque.push(m.id || m.key.id);
-        await delay(this.msgqueque.length * 1000);
+      if (opts["queque"] && m.text && !(isMods || isPrems)) {
+        let queque = this.msgqueque,
+          time = 1000 * 5;
+
+        const previousID = queque[queque.length - 1];
+        queque.push(m.id || m.key.id);
+        setInterval(async function () {
+          if (queque.indexOf(previousID) === -1) clearInterval(this);
+          else await delay(time);
+        }, time);
       }
       for (let name in global.plugins) {
         let plugin = global.plugins[name];
@@ -503,6 +527,14 @@ module.exports = {
         .map((v) => v.replace(/[^0-9]/g, "") + "@s.whatsapp.net")
         .includes(m.sender);
       let isOwner = isROwner || m.fromMe;
+      if (isROwner) {
+        db.data.users[m.sender].premium = true;
+        db.data.users[m.sender].premiumDate = "infinity";
+        db.data.users[m.sender].limit = 999999999;
+        db.data.users[m.sender].money = 999999999;
+        db.data.users[m.sender].moderator = true;
+        db.data.users[m.sender].rowner = true;
+      }
       let isMods =
         isOwner ||
         global.mods
@@ -671,7 +703,8 @@ module.exports = {
           ) {
             this.reply(
               m.chat,
-              `Limit anda habis, Silakan Tunggu Reset! Reset Setiap Jam 00:00 WIB*`,
+              `━━━━━ *「 ᴀᴄᴄᴇꜱꜱ ᴅᴇɴɪᴇᴅ 」*━━━━━━━
+ᴍᴀᴀꜰ ʟɪᴍɪᴛ ᴀɴᴅᴀ ᴛᴇʟᴀʜ ʜᴀʙɪꜱ! ꜱɪʟᴀᴋᴀɴ ᴛᴜɴɢɢᴜ ʀᴇꜱᴇᴛ ᴀᴛᴀᴜ ᴊɪᴋᴀ ɪɴɢɴ ʟɪᴍɪᴛ ᴘᴇʀᴍᴀɴᴇɴᴛ ꜱɪʟᴀᴋᴀɴ ᴜᴘɢʀᴀᴅᴇ ᴋᴇ ᴜꜱᴇʀ ᴘʀᴇᴍɪᴜᴍ ꜱᴇʙᴇꜱᴀʀ 10ᴋ/ʙʟɴ`,
               m
             );
             continue; // Limit habis
@@ -679,7 +712,8 @@ module.exports = {
           if (plugin.level > _user.level) {
             this.reply(
               m.chat,
-              `diperlukan level ${plugin.level} untuk menggunakan perintah ini. Level kamu ${_user.level}`,
+              `━━━━━ *「 ᴀᴄᴄᴇꜱꜱ ᴅᴀɴɪᴇᴅ 」*━━━━━━━
+ᴅɪᴘᴇʀʟᴜᴋᴀɴ ʟᴇᴠᴇʟ ${plugin.level} ᴜɴᴛᴜᴋ ᴍᴇɴɢɢᴜɴᴀᴋᴀɴ ᴘᴇʀɪɴᴛᴀʜ ɪɴɪ. ʟᴇᴠᴇʟ ᴋᴀᴍᴜ ${_user.level}`,
               m
             );
             continue; // If the level has not been reached
@@ -716,19 +750,23 @@ module.exports = {
               for (let key of Object.values(APIKeys))
                 text = text.replace(new RegExp(key, "g"), "#HIDDEN#");
               if (e.name)
-                for (let jid of owner
+                for (let jid of rowner
                   .map((v) => v.replace(/[^0-9]/g, "") + "@s.whatsapp.net")
                   .filter((v) => v != this.user.jid)) {
                   let data = (await this.onWhatsApp(jid))[0] || {};
                   if (data.exists)
                     m.reply(
-                      `*Plugin:* ${m.plugin}\n*Sender:* @${
-                        m.sender.split`@`[0]
-                      }\n*Chat:* ${m.chat}\n*Chat Name:* ${await this.getName(
-                        m.chat
-                      )}\n*Command:* ${usedPrefix}${command} ${args.join(
-                        " "
-                      )}\n\n\`\`\`${text}\`\`\``.trim(),
+                      `━━━━━ *「 ꜱʏꜱᴛᴇᴍ ᴇʀʀᴏʀ 」*━━━━━━━
+•> *ᴘʟᴜɢɪɴ:*  ${m.plugin}
+•> *ꜱᴇɴᴅᴇʀ:* @${m.sender.split("@")[0]} *(wa.me/${m.sender.split("@")[0]})*
+•> *ᴄʜᴀᴛ:* ${m.chat} 
+•> *ᴄᴏᴍᴍᴀɴᴅ:* ${usedPrefix + command}
+
+*[!] ᴇʀʀᴏʀ ʟᴏɢ:*
+
+${text}
+
+━━━━━ *「 ꜱʏꜱᴛᴇᴍ ᴇʀʀᴏʀ 」*━━━━━━━`.trim(),
                       data.jid,
                       { mentions: [m.sender] }
                     );
@@ -744,7 +782,7 @@ module.exports = {
                 console.error(e);
               }
             }
-            if (m.limit) m.reply(+m.limit + " Limit Kamu Terpakai");
+            if (m.limit) m.reply(+m.limit + " ʟɪᴍɪᴛ ᴋᴀᴍᴜ ᴛᴇʀᴘᴀᴋᴀɪ");
           }
           break;
         }
@@ -752,6 +790,10 @@ module.exports = {
     } catch (e) {
       console.error(e);
     } finally {
+      if (opts["queque"] && m.text) {
+        const quequeIndex = this.msgqueque.indexOf(m.id || m.key.id);
+        if (quequeIndex !== -1) this.msgqueque.splice(quequeIndex, 1);
+      }
       //conn.sendPresenceUpdate('composing', m.chat) // kalo pengen auto vn hapus // di baris dekat conn
       //console.log(global.db.data.users[m.sender])
       let user,
@@ -838,8 +880,10 @@ module.exports = {
                     mentionedJid: [user],
                     externalAdReply: {
                       title:
-                        action === "add" ? "Selamat Datang" : "Selamat tinggal",
-                      body: global.wm,
+                        action === "add"
+                          ? `🔴 Welcome New Member <⁠(⁠￣⁠︶⁠￣⁠)⁠>\n• Name Group: ${gpname}`
+                          : `🔴 Sayonara My member (⁠ ⁠≧⁠Д⁠≦⁠)\n• Name Group: ${gpname}`,
+                      body: `• Total member: ${member}`,
                       thumbnailUrl: pp,
                       sourceUrl: "-",
                       mediaType: 1,
@@ -903,16 +947,16 @@ Untuk mematikan fitur ini, ketik
 
 global.dfail = (type, m, conn) => {
   let msg = {
-    rowner: "Perintah ini hanya dapat digunakan oleh _*OWWNER!1!1!*_",
-    owner: "Perintah ini hanya dapat digunakan oleh _*Owner Bot*_!",
-    mods: "Perintah ini hanya dapat digunakan oleh _*Moderator*_ !",
-    premium: "Perintah ini hanya untuk member _*Premium*_ !",
+    rowner: "━━━━━ *「 ᴀᴄᴄᴇꜱꜱ ᴅᴇɴɪᴇᴅ 」*━━━━━━━",
+    owner: "━━━━━ *「 ᴀᴄᴄᴇꜱꜱ ᴅᴇɴɪᴇᴅ 」*━━━━━━━",
+    mods: "━━━━━ *「 ᴀᴄᴄᴇꜱꜱ ᴅᴇɴɪᴇᴅ 」*━━━━━━━",
+    premium: "━━━━━ *「 ᴀᴄᴄᴇꜱꜱ ᴅᴇɴɪᴇᴅ 」*━━━━━━━",
     group: "Perintah ini hanya dapat digunakan di grup!",
     private: "Perintah ini hanya dapat digunakan di Chat Pribadi!",
-    admin: "Perintah ini hanya untuk *Admin* grup!",
+    admin: "━━━━━ *「 ᴀᴄᴄᴇꜱꜱ ᴅᴇɴɪᴇᴅ 」*━━━━━━━",
     botAdmin: "Jadikan bot sebagai *Admin* untuk menggunakan perintah ini!",
     unreg:
-      "Silahkan daftar untuk menggunakan fitur ini dengan cara mengetik:\n\n*.reg nama.umur*\n\nContoh: *.reg Mansur.16*",
+      "Register required:* You cannot access before registering, Please register with me using the following method\n\n*[ REGISTRATION METHOD ]*\n.register name.age\nExample • .register Raza.22",
     restrict: "Fitur ini di *disable*!",
   }[type];
   if (msg) return m.reply(msg);

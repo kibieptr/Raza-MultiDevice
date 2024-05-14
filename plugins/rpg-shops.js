@@ -94,6 +94,7 @@ const Bsword = 150000;
 const Ssword = 15000;
 const Bumpan = 1500;
 const Sumpan = 100;
+const Sarmor = 50000;
 const Bpancingan = 5000000;
 const Spancingan = 500000;
 const Bbatu = 500;
@@ -120,81 +121,100 @@ let handler = async (m, { conn, command, args, usedPrefix, owner }) => {
   let _type = (args[1] || "").toLowerCase();
   let jualbeli = (args[0] || "").toLowerCase();
   let nomors = m.sender;
-  const Kchat = `============================
-    
-*List Harga Beli Barang*
-
-Limit: Rp.${Blimit}
-TiketM: Rp.${Bhealtmonster}
-Cupon: Rp.${Btiketcoin}
-KoinExpg: Rp.${Bkoinexpg}
-Diamond: Rp.${Bdiamond}
-Potion: Rp.${potion}
-
-Sampah: Rp.${Bsampah}
-Armor: Rp.${armor}
-String: Rp.${Bstring}
-Iron: Rp.${Biron}
-Sword: Rp.${Bsword}
-Batu: Rp.${Bbatu}
-Botol: Rp.${Bbotol}
-Kaleng: Rp.${Bkaleng}
-Kardus: Rp.${Bkardus}
-Kayu: Rp.${Bkayu}
-Berlian: Rp.${Bberlian}
-Emas: Rp.${Bemasbiasa}
-Pisang: Rp.${Bpisang}
-Anggur: Rp.${Banggur}
-Mangga: Rp.${Bmangga}
-Jeruk: Rp.${Bjeruk}
-Apel: Rp.${Bapel}
-Bibit Pisang: Rp.${Bbibitpisang}
-Bibit Anggur: Rp.${Bbibitanggur}
-Bibit Mangga: Rp.${Bbibitmangga}
-Bibit Jeruk: Rp.${Bbibitjeruk}
-Bibit Apel: Rp.${Bbibitapel}
-Aqua: Rp.${Baqua}
-Pancingan: Rp.${Bpancingan}
-Umpan: Rp.${Bumpan}
-
-Mythic: Rp.${Bmythic}
-Common: Rp.${Bcommon}
-Uncommon: Rp.${Buncommon}
-Legendary: Rp.${Blegendary}
-
-MakananPet: Rp.${Bmakananpet}
+  const Kchat = `
+Penggunaan ${usedPrefix}shop <Buy|sell> <item> <jumlah>
+Contoh penggunaan: *${usedPrefix}shop buy potion 1*
 
 ============================
+*Kebutuhan   |  Harga Beli*
+TiketM:     ${Bhealtmonster}
+Cupon:     ${Btiketcoin}
+KoinExpg:     ${Bkoinexpg}
 
-*List Harga Jual Barang*
+============================
+*Bibit Buah   |  Harga Beli*
+BibitPisang:       ${Bbibitpisang}
+BibitAnggur:       ${Bbibitanggur}
+BibitMangga:       ${Bbibitmangga}
+BibitJeruk:       ${Bbibitjeruk}
+BibitApel:       ${Bbibitapel}
+Gardenboxs:     ${Bgardenboxs}
+============================
+*Barang   |  Harga Beli*
+Potion:       ${potion}
+Diamond:     ${Bdiamond}
+Common:     ${Bcommon}
+Uncommon:  ${Buncommon}
+Mythic:     ${Bmythic}
+Legendary: ${Blegendary}
+Sampah:     ${Bsampah}
+String:       ${Bstring}
+Iron:       ${Biron}
+Sword:       ${Bsword}
+Batu:       ${Bbatu}
+Botol:       ${Bbotol}
+Kaleng:       ${Bkaleng}
+Kardus:       ${Bkardus}
+Kayu:       ${Bkayu}
+Berlian:       ${Bberlian}
+Emas:       ${Bemasbiasa}
 
-Limit: Rp.${Slimit}
-Potion: Rp.${Spotion}
-Diamond: Rp.${Sdiamond}
-Common: Rp.${Scommon}
-Uncommon: Rp.${Suncommon}
-Mythic: Rp.${Smythic}
-Legendary: Rp.${Slegendary}
-Sampah: Rp.${Ssampah}
+*Barang   | Harga Jual*
+Potion:       ${Spotion}
+Diamond:     ${Sdiamond}
+Common:     ${Scommon}
+Uncommon:  ${Suncommon}
+Mythic:     ${Smythic}
+Legendary: ${Slegendary}
+Sampah:     ${Ssampah}
+String:       ${Sstring}
+Iron:       ${Siron}
+Sword:       ${Ssword}
+Batu:       ${Sbatu}
+Botol:       ${Sbotol}
+Kaleng:       ${Skaleng}
+Kardus:       ${Skardus}
+Kayu:       ${Skayu}
+Berlian:       ${Sberlian}
+Emas:       ${Semasbiasa}
+============================
+*List Makanan:*
 
-Aqua: Rp.${Saqua}
-String: Rp.${Sstring}
-Iron: Rp.${Siron}
-Sword: Rp.${Ssword}
-Batu: Rp.${Sbatu}
-Botol: Rp.${Sbotol}
-Kaleng: Rp.${Skaleng}
-Kardus: Rp.${Skardus}
-Kayu: Rp.${Skayu}
-Berlian: Rp.${Sberlian}
-Emas: Rp.${Semasbiasa}
-Pisang: Rp.${Spisang}
-Anggur: Rp.${Sanggur}
-Mangga: Rp.${Smangga}
-Jeruk: Rp.${Sjeruk}
-Apel: Rp.${Sapel}
+*Makanan | Harga Beli*
+Pisang:       ${Bpisang}
+Anggur:       ${Banggur}
+Mangga:       ${Bmangga}
+Jeruk:       ${Bjeruk}
+Apel:       ${Bapel}
+MakananPet:       ${Bmakananpet}
+MakananNaga:       ${Bmakanannaga}
+MakananKyubi:       ${Bmakanankyubi}
+MakananGriffin:       ${Bmakanangriffin}
+MakananPhonix:       ${Bmakananphonix}
+MakananCentaur:       ${Bmakanancentaur}
 
-MakananPet: Rp.${Smakananpet}
+*Makanan | Harga Jual*
+Pisang:       ${Spisang}
+Anggur:       ${Sanggur}
+Mangga:       ${Smangga}
+Jeruk:       ${Sjeruk}
+Apel:       ${Sapel}
+MakananPet:       ${Smakananpet}
+MakananNaga       ${Smakanannaga}
+MakananKyubi:       ${Smakanankyubi}
+MakananGriffin:       ${Smakanangriffin}
+MakananPhonix:       ${Smakananphonix}
+MakananCentaur:       ${Smakanancentaur}
+============================
+*Minuman | Harga Beli*
+Aqua:       ${Baqua}
+
+*Minuman | Harga Jual*
+Aqua:       ${Saqua}
+============================
+*Fishing | Harga Beli*
+Pancingan:       ${Bpancingan}
+Umpan:       ${Bumpan}
 `.trim();
   try {
     if (/shop|toko/i.test(command)) {
@@ -214,12 +234,18 @@ MakananPet: Rp.${Smakananpet}
                 global.db.data.users[m.sender].potion += count * 1;
                 conn.reply(
                   m.chat,
-                  `Sukses Membeli ${count} Potion Dengan Harga Rp.${
+                  `Succes membeli ${count} Potion dengan harga ${
                     potion * count
-                  }`,
+                  } money\n\nGunakan potion dengan ketik: *${usedPrefix}use potion <jumlah>*`,
                   m
                 );
-              } else conn.reply(m.chat, `Uang Tidak Cukup`);
+              } else
+                conn.reply(
+                  m.chat,
+                  `Uang anda tidak cukup untuk membeli ${count} Potion dengan harga ${
+                    potion * count
+                  } money`
+                );
               break;
             case "diamond":
               if (global.db.data.users[m.sender].money >= Bdiamond * count) {
@@ -227,12 +253,12 @@ MakananPet: Rp.${Smakananpet}
                 global.db.data.users[m.sender].money -= Bdiamond * count;
                 conn.reply(
                   m.chat,
-                  `Sukses Membeli ${count} Diamond Dengan Harga Rp.${
+                  `Succes membeli ${count} Diamond dengan harga ${
                     Bdiamond * count
-                  }`,
+                  } money`,
                   m
                 );
-              } else conn.reply(m.chat, `Uang Tidak Cukup`, m);
+              } else conn.reply(m.chat, `Money anda tidak cukup`, m);
 
               break;
             case "common":
@@ -241,12 +267,19 @@ MakananPet: Rp.${Smakananpet}
                 global.db.data.users[m.sender].money -= Bcommon * count;
                 conn.reply(
                   m.chat,
-                  `Sukses Membeli ${count} Common Dengan Harga Rp.${
+                  `Succes membeli ${count} Common crate dengan harga ${
                     Bcommon * count
-                  }`,
+                  } money`,
                   m
                 );
-              } else conn.reply(m.chat, `Uang Tidak Cukup`, m);
+              } else
+                conn.reply(
+                  m.chat,
+                  `Uang anda tidak cukup untuk membeli ${count} Common crate dengan harga ${
+                    Bcommon * count
+                  } money\n\nBuka crate dengan ketik: *${usedPrefix}open common*`,
+                  m
+                );
 
               break;
             case "uncommon":
@@ -255,12 +288,19 @@ MakananPet: Rp.${Smakananpet}
                 global.db.data.users[m.sender].money -= Buncommon * count;
                 conn.reply(
                   m.chat,
-                  `Sukses Membeli ${count} Uncommon Dengan Harga Rp.${
+                  `Succes membeli ${count} Uncommon crate dengan harga ${
                     Buncommon * count
-                  }`,
+                  } money`,
                   m
                 );
-              } else conn.reply(m.chat, `Uang Tidak Cukup`, m);
+              } else
+                conn.reply(
+                  m.chat,
+                  `Uang anda tidak cukup untuk membeli ${count} Uncommon crate dengan harga ${
+                    Buncommon * count
+                  } money\n\nBuka crate dengan ketik: *${usedPrefix}open uncommon*`,
+                  m
+                );
 
               break;
             case "mythic":
@@ -269,12 +309,19 @@ MakananPet: Rp.${Smakananpet}
                 global.db.data.users[m.sender].money -= Bmythic * count;
                 conn.reply(
                   m.chat,
-                  `Sukses Membeli ${count} Mythic Dengan Harga Rp.${
+                  `Succes membeli ${count} Mythic crate dengan harga ${
                     Bmythic * count
-                  }`,
+                  } money`,
                   m
                 );
-              } else conn.reply(m.chat, `Uang Tidak Cukup`, m);
+              } else
+                conn.reply(
+                  m.chat,
+                  `Uang anda tidak cukup untuk membeli ${count} Mythic crate dengan harga ${
+                    Bmythic * count
+                  } money\n\nBuka crate dengan ketik: *${usedPrefix}open mythic*`,
+                  m
+                );
 
               break;
             case "legendary":
@@ -283,12 +330,19 @@ MakananPet: Rp.${Smakananpet}
                 global.db.data.users[m.sender].money -= Blegendary * count;
                 conn.reply(
                   m.chat,
-                  `Sukses Membeli ${count} Legendary Dengan Harga Rp.${
+                  `Succes membeli ${count} Legendary crate dengan harga ${
                     Blegendary * count
-                  }`,
+                  } money`,
                   m
                 );
-              } else conn.reply(m.chat, `Uang Tidak Cukup`, m);
+              } else
+                conn.reply(
+                  m.chat,
+                  `Uang anda tidak cukup untuk membeli ${count} Legendary crate dengan harga ${
+                    Blegendary * count
+                  } money\n\nBuka crate dengan ketik: *${usedPrefix}open legendary*`,
+                  m
+                );
 
               break;
             case "sampah":
@@ -297,12 +351,19 @@ MakananPet: Rp.${Smakananpet}
                 global.db.data.users[m.sender].money -= Bsampah * count;
                 conn.reply(
                   m.chat,
-                  `Sukses Membeli ${count} Sampah Dengan Harga Rp.${
+                  `Succes membeli ${count} Sampah dengan harga ${
                     Bsampah * count
-                  }`,
+                  } money`,
                   m
                 );
-              } else conn.reply(m.chat, `Uang Tidak Cukup`.trim(), m);
+              } else
+                conn.reply(
+                  m.chat,
+                  `Uang anda tidak cukup untuk membeli ${count} Sampah dengan harga ${
+                    Bsampah * count
+                  } money`.trim(),
+                  m
+                );
 
               break;
             case "kaleng":
@@ -311,12 +372,19 @@ MakananPet: Rp.${Smakananpet}
                 global.db.data.users[m.sender].money -= Bkaleng * count;
                 conn.reply(
                   m.chat,
-                  `Sukses Membeli ${count} Kaleng Dengan Harga Rp.${
+                  `Succes membeli ${count} Kaleng dengan harga ${
                     Bkaleng * count
-                  }`,
+                  } money`,
                   m
                 );
-              } else conn.reply(m.chat, `Uang Tidak Cukup`.trim(), m);
+              } else
+                conn.reply(
+                  m.chat,
+                  `Uang anda tidak cukup untuk membeli ${count} Kaleng dengan harga ${
+                    Bkaleng * count
+                  } money`.trim(),
+                  m
+                );
 
               break;
             case "kardus":
@@ -325,12 +393,19 @@ MakananPet: Rp.${Smakananpet}
                 global.db.data.users[m.sender].money -= Bkardus * count;
                 conn.reply(
                   m.chat,
-                  `Sukses Membeli ${count} Kardus Dengan Harga Rp.${
+                  `Succes membeli ${count} Kardus dengan harga ${
                     Bkardus * count
-                  }`,
+                  } money`,
                   m
                 );
-              } else conn.reply(m.chat, `Uang Tidak Cukup`.trim(), m);
+              } else
+                conn.reply(
+                  m.chat,
+                  `Uang anda tidak cukup untuk membeli ${count} Kardus dengan harga ${
+                    Bkardus * count
+                  } money`.trim(),
+                  m
+                );
 
               break;
             case "botol":
@@ -339,12 +414,19 @@ MakananPet: Rp.${Smakananpet}
                 global.db.data.users[m.sender].money -= Bbotol * count;
                 conn.reply(
                   m.chat,
-                  `Sukses Membeli ${count} Botol Dengan Harga Rp.${
+                  `Succes membeli ${count} Botol dengan harga ${
                     Bbotol * count
-                  }`,
+                  } money`,
                   m
                 );
-              } else conn.reply(m.chat, `Uang Tidak Cukup`.trim(), m);
+              } else
+                conn.reply(
+                  m.chat,
+                  `Uang anda tidak cukup untuk membeli ${count} botol dengan harga ${
+                    Bbotol * count
+                  } money`.trim(),
+                  m
+                );
 
               break;
             case "kayu":
@@ -353,12 +435,19 @@ MakananPet: Rp.${Smakananpet}
                 global.db.data.users[m.sender].money -= Bkayu * count;
                 conn.reply(
                   m.chat,
-                  `Sukses Membeli ${count} Kayu Dengan Harga Rp.${
+                  `Succes membeli ${count} Kayu dengan harga ${
                     Bkayu * count
-                  }`,
+                  } money`,
                   m
                 );
-              } else conn.reply(m.chat, `Uang Tidak Cukup`.trim(), m);
+              } else
+                conn.reply(
+                  m.chat,
+                  `Uang anda tidak cukup untuk membeli ${count} kayu dengan harga ${
+                    Bkayu * count
+                  } money`.trim(),
+                  m
+                );
 
               break;
             case "pisang":
@@ -367,12 +456,19 @@ MakananPet: Rp.${Smakananpet}
                 global.db.data.users[m.sender].money -= Bpisang * count;
                 conn.reply(
                   m.chat,
-                  `Sukses Membeli ${count} Pisang Dengan Harga Rp.${
+                  `Succes membeli ${count} Pisang dengan harga ${
                     Bpisang * count
-                  }`,
+                  } money`,
                   m
                 );
-              } else conn.reply(m.chat, `Uang Tidak Cukup`.trim(), m);
+              } else
+                conn.reply(
+                  m.chat,
+                  `Uang anda tidak cukup untuk membeli ${count} pisang dengan harga ${
+                    Bpisang * count
+                  } money`.trim(),
+                  m
+                );
 
               break;
             case "anggur":
@@ -1041,9 +1137,9 @@ MakananPet: Rp.${Smakananpet}
             case "armor":
               if (global.db.data.users[m.sender].armor == 5)
                 return conn.reply(m.chat, "Armormu sudah *Level Max*", m);
-              if (global.db.data.users[m.sender].money > armor) {
-                global.db.data.users[m.sender].armor += 1;
-                global.db.data.users[m.sender].money -= armor * 1;
+              if (global.db.data.users[m.sender].money >= armor * count) {
+                global.db.data.users[m.sender].armor += count * 1;
+                global.db.data.users[m.sender].money -= armor * count;
                 conn.reply(
                   m.chat,
                   `Succes membeli armor seharga ${armor} money`,
@@ -1235,6 +1331,19 @@ MakananPet: Rp.${Smakananpet}
                   m.chat,
                   `Succes menjual ${count} mangga, dan anda mendapatkan ${
                     Smangga * count
+                  } money`,
+                  m
+                );
+              } else conn.reply(m.chat, `Mangga anda tidak cukup`, m);
+              break;
+            case "armor":
+              if (global.db.data.users[m.sender].armor >= count * 5) {
+                global.db.data.users[m.sender].armor -= count * 5;
+                global.db.data.users[m.sender].money += Sarmor * count;
+                conn.reply(
+                  m.chat,
+                  `Succes menjual Armor, dan anda mendapatkan ${
+                    Sarmor * count
                   } money`,
                   m
                 );
@@ -2838,13 +2947,10 @@ MakananPet: Rp.${Smakananpet}
   }
 };
 
-handler.help = ["shop"];
+handler.help = ["shop <sell|buy> <args>"];
 handler.tags = ["rpg"];
 
-handler.command = /^(shop)$/i;
+handler.command = /^(shop|toko|buy|beli|sell|jual)$/i;
 handler.limit = true;
 handler.group = true;
-handler.fail = null;
-handler.exp = 0;
-handler.register = true;
 module.exports = handler;

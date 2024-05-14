@@ -3,59 +3,24 @@ let levelling = require("../lib/levelling");
 const axios = require("axios");
 const fetch = require("node-fetch");
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-  function no(number) {
-    return number.replace(/\s/g, "").replace(/([@+-])/g, "");
-  }
-
-  text = no(text);
-
-  if (isNaN(text)) {
-    var number = text.split`@`[1];
-  } else if (!isNaN(text)) {
-    var number = text;
-  }
-
-  if (!text && !m.quoted)
-    return conn.reply(
-      m.chat,
-      `*❏ GET NUMBER*\n\n• \`\`\`\Tag user:\`\`\`\ *${usedPrefix}profile @Tag*\n• \`\`\`\Type number:\`\`\`\ *${usedPrefix}profile 6289654360447*\n• \`\`\`\Check my profile:\`\`\`\ *(Balas / Reply Pesan Anda Sendiri)*\n• \`\`\`\Reply user which want in\`\`\`\  _*STALKING*_`,
-      m
-    );
-  if (isNaN(number))
-    return conn.reply(
-      m.chat,
-      `*❏ GET NUMBER*\n\n• \`\`\`\Tag user:\`\`\`\ *${usedPrefix}profile @Tag*\n• \`\`\`\Type number:\`\`\`\ *${usedPrefix}profile 6289654360447*\n• \`\`\`\Check my profile:\`\`\`\ *(Balas / Reply Pesan Anda Sendiri)*\n• \`\`\`\Reply user which want in\`\`\`\  _*STALKING*_`,
-      m
-    );
-  if (number.length > 15)
-    return conn.reply(
-      m.chat,
-      `*❏ GET NUMBER*\n\n• \`\`\`\Tag user:\`\`\`\ *${usedPrefix}profile @Tag*\n• \`\`\`\Type number:\`\`\`\ *${usedPrefix}profile 6289654360447*\n• \`\`\`\Check my profile:\`\`\`\ *(Balas / Reply Pesan Anda Sendiri)*\n• \`\`\`\Reply user which want in\`\`\`\  _*STALKING*_`,
-      m
-    );
   let pp =
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXIdvC1Q4WL7_zA6cJm3yileyBT2OsWhBb9Q&usqp=CAU";
+  let who =
+    m.mentionedJid && m.mentionedJid[0]
+      ? m.mentionedJid[0]
+      : m.fromMe
+      ? conn.user.jid
+      : m.sender;
   try {
-    //pp = await conn.updateProfilePicture(text)
-    if (text) {
-      var who = number + "@s.whatsapp.net";
-    } else if (m.quoted.sender) {
-      var who = m.quoted.sender;
-    } else if (m.mentionedJid) {
-      var who = number + "@s.whatsapp.net";
-    }
-    //let pp = './src/avatar_contact.png'
     pp = await conn.profilePictureUrl(who, "image");
   } catch (e) {
-    //pp = 'https://telegra.ph/file/32ffb10285e5482b19d89.jpg'
-    //} catch (e) {
   } finally {
     if (typeof db.data.users[who] == "undefined")
       throw "Pengguna tidak ada didalam data base";
     let groupMetadata = m.isGroup ? await conn.groupMetadata(m.chat) : {};
     let participants = m.isGroup ? groupMetadata.participants : [];
     let users = m.isGroup ? participants.find((u) => u.jid == who) : {};
-    let user = db.data.users[who]
+    let user = db.data.users[who];
     let number = who.split("@")[0];
     //let pp = await conn.updateProfilePicture(who)
     let about =
@@ -83,21 +48,25 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     let math = max - xp;
     let prem = global.prems.includes(who.split`@`[0]);
     let jodoh = `Berpacaran Dengan @${pasangan.split`@`[0]}`;
-    let str = `– *ɪɴғᴏ ᴜsᴇʀ*
-    
-┌ • *Username:* ${user.name}
-│ • *Bio:* ${about ? "" + about : ""}
-│ • *Age:* ${registered ? "" + age : ""} Years
-└ • *Status:* ${pasangan ? jodoh : "Jomblo"}
-
-┌ • *XP:* (${exp - min} / ${xp}) [${math <= 0 ? `Ready to *${usedPrefix}levelup*` : `${math} XP left to levelup` }]
+    let str = `✧───────[ *PROFILE* ]───────✧
+┌ • *Name:* ${username} ${registered ? "(" + name + ") " : ""}
+│ • *Role:* ${
+      who.split`@`[0] == global.owner
+        ? "🎗️Owner🎗️"
+        : who.split`@`[0] == global.creator
+        ? "✨Creator✨"
+        : user.level >= 1000
+        ? "ᴇʟɪᴛᴇ ᴜsᴇʀ"
+        : "ғʀᴇᴇ ᴜsᴇʀ"
+    }
+│ • *Limit:* ${limit}
+│ • *Exp:* ${exp}
+│ • *Money:* ${money}
+│ • *Age:* ${age}
 │ • *Level:* ${level}
-│ • *Role:* ${who.split`@`[0] == global.owner ? '🎗️Owner🎗️' : who.split`@`[0] == global.creator ? '✨Creator✨' : user.level >= 1000 ? 'ᴇʟɪᴛᴇ ᴜsᴇʀ' : 'ғʀᴇᴇ ᴜsᴇʀ'}
-└ • *Limit:* ${limit}
-
-┌ • *Registered:* ${registered ? "Yes" : "No"}
-│ • *Premium:* ${premium ? "Yes" : "No"}
-└ • *Expired:* ${premiumDate - now > 1? msToDate(premiumDate - now) : "*Tidak diatur expired!*"}
+│ • *Status:* ${pasangan ? jodoh : "Jomblo"}
+│ • *Premium:* ${premium ? "✅" : "❌"}
+└ • *Registered:* ${registered ? "✅" : "❌"}
 `.trim();
     let mentionedJid = [who];
     conn.sendFile(m.chat, pp, "pp.jpg", str, m, false, {
@@ -105,9 +74,9 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     });
   }
 };
-handler.help = ["profile [@user]"];
+handler.help = ["profile","me"];
 handler.tags = ["info"];
-handler.command = /^profile$/i;
+handler.command = /^profile|me$/i;
 handler.register = true;
 
 module.exports = handler;

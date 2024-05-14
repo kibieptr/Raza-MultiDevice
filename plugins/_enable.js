@@ -42,6 +42,15 @@ let handler = async (
       }
       chat.delete = isEnable;
       break;
+    case "antitoxic":
+      if (m.isGroup) {
+        if (!(isAdmin || isOwner)) {
+          global.dfail("admin", m, conn);
+          throw false;
+        }
+      }
+      chat.antiToxic = isEnable;
+      break;
     case "antidelete":
       if (m.isGroup) {
         if (!(isAdmin || isOwner)) {
@@ -142,6 +151,15 @@ let handler = async (
       }
       chat.antiToxic = isEnable;
       break;
+    case "antispam":
+      if (m.isGroup) {
+        if (!(isAdmin || isOwner)) {
+          global.dfail("admin", m, conn);
+          throw false;
+        }
+      }
+      chat.antispam = isEnable;
+      break;
     case "autolevelup":
       isUser = true;
       user.autolevelup = isEnable;
@@ -229,6 +247,8 @@ let handler = async (
   | antilink
   | antibot
   | antivirtex
+  | antitoxic
+  | antispam
   | antidelete
   | antisticker
   | autosticker

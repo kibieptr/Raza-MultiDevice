@@ -1,12 +1,22 @@
+const util = require("util");
+const path = require("path");
+
 let handler = async (m, { conn }) => {
-  let ye = `@${m.sender.split`@`[0]}`;
-  let esce = `
-Hai ${ye} Bot Ini Menggunakan Script Buatan Dari Kibieptr | Harga Script 500K
-`;
-  m.reply(esce);
+  conn.sendFile(
+    m.chat,
+    "https://bucin-livid.vercel.app/audio/sc1.mp3",
+    "sc.mp3",
+    null,
+    m,
+    true,
+    {
+      type: "audioMessage",
+      ptt: true,
+    }
+  );
 };
-handler.help = ["sc", "sourcecode"];
-handler.tags = ["info"];
-handler.command = /^(sc|sourcecode)$/i;
+handler.help = ["sc", "sourcecode", "script"];
+handler.tags = ["info", "main"];
+handler.command = /^(sc|sourcecode|script)$/i;
 handler.register = true;
 module.exports = handler;

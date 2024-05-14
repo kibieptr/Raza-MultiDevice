@@ -46,15 +46,11 @@ let handler = async (m, { conn }) => {
       mentionedJid: [m.sender],
     },
   });
-  conn.sendMessage(m.chat, {
-    audio: fs.readFileSync("./vn/menunya.mp3"),
-    quoted: m,
-  });
 };
+
 
 handler.help = ["menu"];
 handler.tags = ["main"];
 handler.command = /^(menu|help)$/i;
-handler.register = true;
 
 module.exports = handler;

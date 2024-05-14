@@ -62,6 +62,7 @@ let handler = async (m, { conn }) => {
 │  ◦ *Links:* wa.me/${conn.user.jid.split("@")[0]}
 │  ◦ *Modes:* ${global.opts["self"] ? "Self" : "Public"}
 │  ◦ *Active:* ${muptime}
+│  ◦ *Version:* ${global.version}
 │  ◦ *User:* ${Object.keys(global.db.data.users).length}
 │  ◦ *Banned Users:* ${
     Object.values(global.db.data.users).filter((user) => user.banned).length
@@ -179,4 +180,20 @@ async function backgroundText(
 
   // Mengembalikan gambar hasil
   return canvas.toBuffer();
+      
+      let replace = {
+        '%': '%',
+        p: _p, uptime, muptime,
+        me: conn.getName(conn.user.jid),
+        npmname: package.name,
+        npmdesc: package.description,
+        version: package.version,
+        exp: exp - min,
+        maxexp: xp,
+        totalexp: exp,
+        xp4levelup: max - exp,
+        github: package.homepage ? package.homepage.url || package.homepage : '[unknown github url]',
+        level, limit, name, weton, week, date, dateIslamic, wib, wit, wita, time, totalreg, rtotalreg, role
+      }
+      text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
 }
