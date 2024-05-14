@@ -1,6 +1,0 @@
-services:
-  - type: web
-    name: bot-wa
-    env: docker
-    region: Singapore 
-    plan: free
