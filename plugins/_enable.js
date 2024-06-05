@@ -253,7 +253,6 @@ let handler = async (
   | antisticker
   | autosticker
   | autolevelup
-  | autosholat
   | detect
   | document
   | whitelistmycontacts

@@ -36,9 +36,9 @@ let handler = async (m, { conn, usedPrefix, args }) => {
   }
 };
 
-handler.help = ["cleartmp"];
+handler.help = ["clearcache"];
 handler.tags = ["owner"];
-handler.command = /^(cleartmp)$/i;
-handler.rowner = true;
+handler.command = /^(clearcache)$/i;
+handler.owner = true;
 handler.register = true;
 module.exports = handler;

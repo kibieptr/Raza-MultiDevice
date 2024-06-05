@@ -1,7 +1,6 @@
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-  let panel = `*==> 📮 RAZA STORE BY RAZABOTS & PIYYUU 📮 <===*
-*RAZA STORE* Menyediakan berbagai kebutuhan digital murah dah berkualitas  ✅
-
+  let panel = `*==> 📮 RAZA STORE BY RAZABOTS 📮 <===*\n
+*RAZA STORE* Menyediakan berbagai kebutuhan digital murah dah berkualitas  ✅\n
 *===> LIST <===*
 📮 _RDP & VPS_
 📮 _Panel Digital Ocean_

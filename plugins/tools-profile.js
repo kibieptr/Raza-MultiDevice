@@ -49,24 +49,16 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     let prem = global.prems.includes(who.split`@`[0]);
     let jodoh = `Berpacaran Dengan @${pasangan.split`@`[0]}`;
     let str = `✧───────[ *PROFILE* ]───────✧
-┌ • *Name:* ${username} ${registered ? "(" + name + ") " : ""}
-│ • *Role:* ${
-      who.split`@`[0] == global.owner
-        ? "🎗️Owner🎗️"
-        : who.split`@`[0] == global.creator
-        ? "✨Creator✨"
-        : user.level >= 1000
-        ? "ᴇʟɪᴛᴇ ᴜsᴇʀ"
-        : "ғʀᴇᴇ ᴜsᴇʀ"
-    }
+┌ • *Name:* ${registered ? "" + name + " " : ""}
 │ • *Limit:* ${limit}
 │ • *Exp:* ${exp}
-│ • *Money:* ${money}
+│ • *Money:* RP ${(user.money || 0).toLocaleString("id-ID")}
 │ • *Age:* ${age}
 │ • *Level:* ${level}
 │ • *Status:* ${pasangan ? jodoh : "Jomblo"}
+│ • *Registered:* ${registered ? "✅" : "❌"}
 │ • *Premium:* ${premium ? "✅" : "❌"}
-└ • *Registered:* ${registered ? "✅" : "❌"}
+└ • *Waktu Premium:* ${(premiumDate - now) > 1 ? msToDate(premiumDate - now) : '*Tidak diatur!*'}
 `.trim();
     let mentionedJid = [who];
     conn.sendFile(m.chat, pp, "pp.jpg", str, m, false, {

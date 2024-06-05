@@ -1,13 +1,3 @@
-/* 
-Script By Reelly XD
-  • YT: ReellyXD
-  • IG: reellyxd
-Buy Script? 
-  • WA: +62 857-0436-85323
-  • TELE: t.me/rely_xd
-  • Github: github.com/ReellyXD
-*/
-
 const { downloadContentFromMessage } = require('@adiwajshing/baileys')
 
 let handler = async (m, { conn }) => {
@@ -30,8 +20,8 @@ let handler = async (m, { conn }) => {
 handler.help = ['readvo']
 handler.tags = ['tools']
 handler.command = ['readviewonce', 'read', 'rvo', 'liat', 'readvo']
-handler.premium = false
-handler.register = false
+handler.premium = true
+handler.register = true
 handler.limit = true
 handler.register = true;
 module.exports = handler

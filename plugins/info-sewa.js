@@ -4,8 +4,9 @@ let handler = async (m, { conn }) => {
 │ • *1 Bulan:* 5K
 │ • *3 Bulan:* 10K
 │ • *6 Bulan:* 20K
+| • *Permanent:* 50K
 ┠──「   *Pembayaran*    」
-│ •  Ovo - Gopay - Dana - BRI - JAGO
+│ Ovo - Gopay - Dana - BRI - JAGO
 ❏──────────────๑
 `;
   conn.reply(m.chat, sewa, m);

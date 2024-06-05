@@ -31,7 +31,7 @@ async function handler(m, { conn, usedPrefix, command }) {
 handler.help = ["remini"];
 handler.tags = ["tools"];
 handler.command = ["remini"];
-handler.premium = false;
+handler.premium = true;
 handler.limit = 5;
 handler.register = true;
 module.exports = handler;

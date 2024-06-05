@@ -8,14 +8,14 @@ async function before(m, { conn, isAdmin, isBotAdmin }) {
     if (isBotAdmin && !isAdmin) {
       await conn.reply(
         m.chat,
-        "Kamu Terdeteksi Mengirim Font Aneh!\n\nMaka Kamu Akan Dikick",
+        "Kamu Terdeteksi Mengirim Virtex Aneh! Dasar Laknat\n\nMaka Kamu Akan Dikick",
         false
       );
       conn.sendMessage(m.chat, { delete: m.key });
     } else {
       conn.reply(
         m.chat,
-        "Kamu Terdeteksi Mengirim Font Aneh\n\nBot Bukan Admin :("
+        "Kamu Terdeteksi Mengirim Virtex Aneh\n\nBot Bukan Admin :("
       );
     }
   }

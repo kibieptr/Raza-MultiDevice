@@ -1,14 +1,13 @@
-const { readdirSync, statSync, unlinkSync } = require('fs');
-const { join } = require('path');
+const { readdirSync, statSync, unlinkSync } = require("fs");
+const { join } = require("path");
 
 let handler = async (m, { conn, usedPrefix, args }) => {
-
-  const sesi = ['./sessions'];
+  const sesi = ["./sessions"];
   const array = [];
 
-  sesi.forEach(dirname => {
-    readdirSync(dirname).forEach(file => {
-      if (file !== 'creds.json') { 
+  sesi.forEach((dirname) => {
+    readdirSync(dirname).forEach((file) => {
+      if (file !== "creds.json") {
         array.push(join(dirname, file));
       }
     });
@@ -16,7 +15,7 @@ let handler = async (m, { conn, usedPrefix, args }) => {
 
   const deletedFiles = [];
 
-  array.forEach(file => {
+  array.forEach((file) => {
     const stats = statSync(file);
 
     if (stats.isDirectory()) {
@@ -27,21 +26,21 @@ let handler = async (m, { conn, usedPrefix, args }) => {
     }
   });
 
-  conn.reply(m.chat, 'Success!', m);
+  conn.reply(m.chat, "Success!", m);
 
   if (deletedFiles.length > 0) {
-    console.log('Deleted files:', deletedFiles);
-    conn.reply(m.chat, `Deleted files:\n${deletedFiles.join('\n')}`, m);
+    console.log("Deleted files:", deletedFiles);
+    conn.reply(m.chat, `Deleted files:\n${deletedFiles.join("\n")}`, m);
   }
 
   if (deletedFiles.length == 0) {
-    conn.reply(m.chat, 'tidak ada file yang tersisa di folder sessions', m);
+    conn.reply(m.chat, "tidak ada file yang tersisa di folder sessions", m);
   }
 };
 
-handler.help = ['clearsession'];
-handler.tags = ['owner'];
+handler.help = ["clearsession"];
+handler.tags = ["owner"];
 handler.command = /^(clearsession|clearsessions)$/i;
-handler.rowner = true;
+handler.owner = true;
 handler.register = true;
 module.exports = handler;

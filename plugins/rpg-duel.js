@@ -1,26 +1,25 @@
 let handler = async (m, { conn, text, args, command }) => {
-  conn.duel = conn.duel ? conn.duel : [];
-  args.length != 0
-    ? conn.duel.push(
-        m.mentionedJid
-          ? m.mentionedJid[0]
-          : args[0].replace(/[@ .+-]/g, "").replace(" ", "") + "@s.whatsapp.net"
-      )
-    : "";
+  conn.duel = conn.duel || [];
+  if (args.length !== 0) {
+    let target = m.mentionedJid
+      ? m.mentionedJid[0]
+      : args[0].replace(/[@ .+-]/g, "").replace(" ", "") + "@s.whatsapp.net";
+    conn.duel.push(target);
+  }
+
   let who = conn.duel[0];
-  //let kita = conn.duel[m.sender]
   let enemy = global.db.data.users[who];
   let user = global.db.data.users[m.sender];
   let count =
     args[1] && args[1].length > 0
       ? Math.min(100, Math.max(parseInt(args[1]), 1))
-      : Math.min(1);
+      : 1;
   let nama = await conn.getName(m.sender);
 
-  let randomaku = `${Math.floor(Math.random() * 101)}`.trim();
-  let randomkamu = `${Math.floor(Math.random() * 81)}`.trim();
-  let Aku = randomaku * 1;
-  let Kamu = randomkamu * 1;
+  let randomaku = Math.floor(Math.random() * 101);
+  let randomkamu = Math.floor(Math.random() * 81);
+  let Aku = randomaku;
+  let Kamu = randomkamu;
 
   let __timers = new Date() - user.lastduel;
   let _timers = 300000 - __timers;
@@ -39,8 +38,9 @@ let handler = async (m, { conn, text, args, command }) => {
         conn.reply(m.chat, pler, m, {
           mentions: conn.parseMention(mentionedJid),
         });
-      } else
+      } else {
         conn.reply(m.chat, `Kamu Sudah Berduel Tunggu Selama ${timers}`, m);
+      }
     }
 
     if (/gass/.test(command)) {
@@ -50,7 +50,7 @@ let handler = async (m, { conn, text, args, command }) => {
       if (Aku > Kamu) {
         user.money -= 900;
         enemy.money += 900;
-        delete conn.duel[m.sender];
+        conn.duel = [];
         conn.reply(
           m.chat,
           `@${who.split("@")[0]} Menang Gelud\n*Hadiah:*\nUang: Rp.900`.trim(),
@@ -59,7 +59,7 @@ let handler = async (m, { conn, text, args, command }) => {
       } else if (Aku < Kamu) {
         user.money += 450;
         enemy.money -= 450;
-        delete conn.duel[m.sender];
+        conn.duel = [];
         conn.reply(
           m.chat,
           `@${who.split("@")[0]} Kalah Gelud\n*Hadiah:*\nRp.450`.trim(),
@@ -68,7 +68,7 @@ let handler = async (m, { conn, text, args, command }) => {
       } else {
         user.money += 250;
         enemy.money += 250;
-        delete conn.duel[m.sender];
+        conn.duel = [];
         conn.reply(
           m.chat,
           `@${
@@ -78,12 +78,12 @@ let handler = async (m, { conn, text, args, command }) => {
         );
       }
     }
+
     if (/skip/.test(command)) {
       let kenal = !who.includes(m.sender);
       if (kenal) return conn.reply(m.chat, `Lu Siapa?\nLu Itu Ga Di Ajak`, m);
-      //if (!who) return m.reply('tag yg ingin di ajak duel!')
       conn.reply(m.chat, `@${who.split("@")[0]} Membatalkan Ajakan Duel`, m);
-      delete conn.duel[m.sender];
+      conn.duel = [];
     }
   } catch (e) {
     return m.reply(`${e}`);
@@ -102,6 +102,7 @@ module.exports = handler;
 function pickRandom(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
+
 function clockString(ms) {
   let d = isNaN(ms) ? "--" : Math.floor(ms / 86400000);
   let h = isNaN(ms) ? "--" : Math.floor(ms / 3600000) % 24;

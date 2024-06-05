@@ -1,7 +1,5 @@
-const fetch = require("node-fetch");
-const FormData = require('form-data');
-const { fromBuffer } = require('file-type');
-const uploadImage = require('../lib/uploadImage.js')
+const uploadImage = require('../lib/uploadImage');
+const fetch = require('node-fetch');
 let handler = async (m, { 
 conn, 
 usedPrefix, 
@@ -10,15 +8,15 @@ command
 	var q = m.quoted ? m.quoted : m
 	var mime = (q.msg || q).mimetype || q.mediaType || ''
 	if (/image/g.test(mime) && !/webp/g.test(mime)) {
+		await conn.reply(m.chat, wait, m)
 		try {
-	       await conn.reply(m.chat, wait, m)
 			const img = await q.download?.()
 			let out = await uploadImage(img)
 			let old = new Date()
-			let res = await fetch(`https://api.botcahx.eu.org/api/maker/jadianime3d?url=${out}&apikey=${btc}`)
+			let res = await fetch(`https://api.botcahx.eu.org/api/maker/jadianime?url=${out}&apikey=${btc}`)
 			let convert = await res.json()
-			let buff = await fetch(convert.result.output.fileUrl)
-           .then(res => res.buffer())
+			let buff = await fetch(convert.result.img_crop_single)
+  .then(res => res.buffer())
 			await conn.sendMessage(m.chat, { image: buff, caption: `🍟 *Fetching* : ${((new Date - old) * 1)} ms` }, { quoted: m })
 		} catch (e) {
 			console.log(e)

@@ -1,0 +1,59 @@
+const xpperlimit = 1;
+
+let handler = async (m, { conn, command, args }) => {
+  let user = global.db.data.users[m.sender];
+  let count = command.replace(/^nabung/i, "");
+  count = count
+    ? /all/i.test(count)
+      ? Math.floor(user.money / xpperlimit)
+      : parseInt(count)
+    : args[0]
+    ? parseInt(args[0])
+    : 1;
+  count = Math.max(1, count);
+
+  if (user.atm === 0) {
+    return m.reply(
+      "Kamu Belum Punya ATM, Bikin Dulu Sana\nCaranya Ketik .craft atm"
+    );
+  }
+
+  if (user.bank >= user.fullatm) {
+    return m.reply("Uang di bank kamu sudah penuh!");
+  }
+
+  if (count > user.fullatm - user.bank) {
+    return m.reply(
+      `Kamu hanya bisa menabung maksimal Rp.${(
+        user.fullatm - user.bank
+      ).toLocaleString("id-ID")} lebih banyak.`
+    );
+  }
+
+  if (user.money >= xpperlimit * count) {
+    user.money -= xpperlimit * count;
+    user.bank += count;
+    conn.reply(
+      m.chat,
+      `Sukses menabung uang sebesar Rp.${count.toLocaleString("id-ID")}`,
+      m
+    );
+  } else {
+    conn.reply(
+      m.chat,
+      `Uang kamu tidak mencukupi untuk menabung uang sebesar Rp ${count.toLocaleString(
+        "id-ID"
+      )}`,
+      m
+    );
+  }
+};
+
+handler.help = ["nabung"];
+handler.tags = ["rpg"];
+handler.command = /^nabung([0-9]+)|nabung|nabungall$/i;
+handler.fail = null;
+handler.exp = 0;
+handler.register = true;
+
+module.exports = handler;

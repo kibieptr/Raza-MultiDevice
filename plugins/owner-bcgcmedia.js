@@ -20,11 +20,7 @@ let handler = async (m, { conn, text }) => {
           cc,
           /bc|broadcast/i.test(teks)
             ? teks
-            : teks +
-                "\n" +
-                readMore +
-                "「 All Group Broadcast 」\n" +
-                randomID(32)
+            : teks + "\n" + "\n「 Group Broadcast 」\n" + randomID(32)
         ),
         true
       )

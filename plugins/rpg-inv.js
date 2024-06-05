@@ -1,4 +1,5 @@
 let handler = async (m, { conn, usedPrefix }) => {
+  let user = global.db.data.users[m.sender];
   let healt = global.db.data.users[m.sender].healt;
   let armor = global.db.data.users[m.sender].armor;
   // let warn = global.db.data.users[m.sender].warn
@@ -131,15 +132,12 @@ let handler = async (m, { conn, usedPrefix }) => {
       ? "Netherite Armor"
       : ""
   }*
-  Money: *${money}*
+  Money: *Rp ${(user.money || 0).toLocaleString("id-ID")}*
   Limit: *${limit}*
   Level: *${level}*
   Exp: *${exp}*
-  Atm: *${bank}*
-  Cupon: *${cupon}*
-  Expg: *${expg}*
+  Bank: *Rp ${(user.bank || 0).toLocaleString("id-ID")}*
   Tiketm: *${tiketm}*
-  Tiketcoin: *${tiketcoin}*
   
   *Inventory*
   Potion: *${potion}*
@@ -153,13 +151,11 @@ let handler = async (m, { conn, usedPrefix }) => {
   Aqua: *${aqua}*
   
   *Inventory Kotak Harta*
-  Boxs: *${boxs}*
   Common: *${common}*
   Uncommon: *${uncommon}*
   Mythic: *${mythic}*
   Legendary: *${legendary}*.
   Pet: *${pet}*
-  Gardenboxs: *${gardenboxs}*
   
   *Inventory Buah*
   Mangga: ${mangga}
@@ -181,20 +177,11 @@ let handler = async (m, { conn, usedPrefix }) => {
   Botol: ${botol}
   
   *Inventory Nambang*
-  Berlian: ${berlian}
   Emas: ${emas}
   Diamond: ${diamond}
   
   *Inventory Pet*
   Makanan Pet: *${makananpet}*
-  Makanan Phonix: *${makananphonix}*
-  Makanan Naga: *${makanannaga}*
-  Makanan Griffin: *${makanangriffin}*
-  Makanan Kyubi: *${makanankyubi}*
-  Makanan Centaur: *${makanancentaur}*
-  
-  
-  *Pet*
   Kucing: *${
     kucing == 0
       ? "Tidak Punya"

@@ -42,5 +42,6 @@ handler.tags = ['fun']
 handler.help = ['menfess']
 handler.command = /^(menfess|menfes)$/i
 handler.private = true
-handler.register = true;
+handler.register = true
+handler.premium = true
 module.exports = handler

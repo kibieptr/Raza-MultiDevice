@@ -2,11 +2,6 @@ let handler = async (m, { conn, command, args, usedPrefix }) => {
   let type = (args[0] || "").toLowerCase();
   let users = global.db.data.users[m.sender];
   let time = global.db.data.users[m.sender].lastkerja + 300000;
-  //let __timers = (new Date - global.db.data.users[m.sender].lastkerja)
-  // let _timers = (0 - __timers)
-  // let timers = clockString(_timers)
-  //JANGAN DI OTAK ATIK
-  //PEMBATAS
   let penumpan = [
     "mas mas",
     "bapak bapak",
@@ -68,7 +63,7 @@ let handler = async (m, { conn, command, args, usedPrefix }) => {
   let ddppecat = [
     "Bakar Pasien",
     "Jual Organ Dalem ke Lapak ilegal",
-    "serinv telat",
+    "sering telat",
   ];
   let alasanpasien = ddppecat[Math.floor(Math.random() * ddppecat.length)];
   //Uang
@@ -105,7 +100,7 @@ Contoh: *.kerja ojek*
           throw `Kamu Sudah Bekerja\nSaatnya Istirahat Selama ${clockString(
             time - new Date()
           )}`;
-        global.db.data.users[m.sender].atm += uangm;
+        global.db.data.users[m.sender].money += uangm;
         global.db.data.users[m.sender].lastkerja = new Date() * 1;
         m.reply(
           `Kamu Sudah Mengantarkan *${penumpang}*\nDan Mendapatkan Uang Senilai *Rp.${uangm}*`
@@ -118,7 +113,7 @@ Contoh: *.kerja ojek*
           throw `Kamu Sudah Bekerja,Saatnya Istirahat Selama\n${clockString(
             time - new Date()
           )}`;
-        global.db.data.users[m.sender].atm += duit;
+        global.db.data.users[m.sender].money += duit;
         global.db.data.users[m.sender].lastkerja = new Date() * 1;
         m.reply(
           `Ada Pembeli Yang Membeli *${dagangan}*\nDan Mendapatkan Uang Senilai *Rp.${duit} *`
@@ -135,7 +130,7 @@ Contoh: *.kerja ojek*
           throw `Kamu Sudah Bekerja,Saatnya Istirahat Selama\n${clockString(
             time - new Date()
           )}`;
-        global.db.data.users[m.sender].atm += duitm;
+        global.db.data.users[m.sender].money += duitm;
         global.db.data.users[m.sender].lastkerja = new Date() * 1;
         m.reply(
           `Kamu Menyembuhkan Pasien *${pasien}*\nDan Mendapatkan Uang Senilai *Rp.${duitm}*`
@@ -148,7 +143,7 @@ Contoh: *.kerja ojek*
           throw `Kamu Sudah Bekerja,Saatnya Istirahat Selama\n${clockString(
             time - new Date()
           )}`;
-        global.db.data.users[m.sender].atm += uangm;
+        global.db.data.users[m.sender].money += uangm;
         global.db.data.users[m.sender].lastkerja = new Date() * 1;
         m.reply(
           `${panen} Sudah Panen Dan Menjualnya\nHasil Menjual Mendapatkan Uang Senilai Rp.*${duitd}*`
@@ -161,7 +156,7 @@ Contoh: *.kerja ojek*
           throw `Kamu Sudah blBekerja,Saatnya Istirahat Selama\n${clockString(
             time - new Date()
           )}`;
-        global.db.data.users[m.sender].atm += duitr;
+        global.db.data.users[m.sender].money += duitr;
         global.db.data.users[m.sender].lastkerja = new Date() * 1;
         m.reply(
           `Kamu Baru Saja Mendapatkan Pelanggan Dan Memperbaiki *${bengkel}*\nHasil Memperbaiki Mendapatkan Uang Senilai *Rp.${duitr}*`
@@ -174,7 +169,7 @@ Contoh: *.kerja ojek*
           throw `Kamu Sudah Bekerja,Saatnya Istirahat Selama\n${clockString(
             time - new Date()
           )}`;
-        global.db.data.users[m.sender].atm += duitk;
+        global.db.data.users[m.sender].money += duitk;
         global.db.data.users[m.sender].lastkerja = new Date() * 1;
         m.reply(
           `Kamu Baru Saja Selesai ${rumah}\nDan Mendapatkan Uang Senilai *Rp.${duitk}*`

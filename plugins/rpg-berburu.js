@@ -1,11 +1,11 @@
 let handler = async (m, {
 	conn
 }) => {
-	let __timers = (new Date - global.db.data.users[m.sender].lastberbru)
-	let _timers = (500000 - __timers)
+	let __timers = (new Date - global.db.data.users[m.sender].lastberburu)
+	let _timers = (1800000 - __timers)
 	let timers = clockString(_timers)
 	let user = global.db.data.users[m.sender]
-	if (new Date - global.db.data.users[m.sender].lastberbru > 500000) {
+	if (new Date - global.db.data.users[m.sender].lastberburu > 1800000) {
 		let randomaku1 = `${Math.floor(Math.random() * 10)}`
 		let randomaku2 = `${Math.floor(Math.random() * 10)}`
 		let randomaku4 = `${Math.floor(Math.random() * 10)}`
@@ -72,23 +72,23 @@ let handler = async (m, {
 
 		setTimeout(() => {
 			conn.reply(m.chat, hsl, m)
-		}, 20000)
+		}, 8000)
 
 		setTimeout(() => {
 			conn.reply(m.chat `Nah Ini Dia...\n\nKamu Menang Adu Mekanik, Walau Buruanmu Menggunakan Immortal :v`, m)
-		}, 18000)
+		}, 6000)
 
 		setTimeout(() => {
 			conn.reply(m.chat, `Duarrrr, Kamu Adu Mekanik Dengan Buruanmu Di Land Of Dawn`, m)
-		}, 15000)
+		}, 5000)
 
 		setTimeout(() => {
 			conn.reply(m.chat, `Kamu Mendapatkan Mangsa Dan Menunggu Waktu Yang Tepat Untuk Memangsa`, m)
-		}, 14000)
+		}, 4000)
 
 		setTimeout(() => {
 			conn.reply(m.chat `Sedang Mencari Mangsa..`, m)
-		}, 0)
+		}, 2500)
 		user.lastberburu = new Date * 1
 	} else conn.reply(m.chat, `*Sepertinya Kamu Sudah Kecapekan*\n*Silahkan Istirahat Dulu Selama* ${timers}`, m)
 }

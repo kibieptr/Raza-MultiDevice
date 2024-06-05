@@ -16,6 +16,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     lastclaim,
     lastweekly,
     lastmonthly,
+    lasttahunan,
   } = global.db.data.users[m.sender];
 
   let healt = global.db.data.users[m.sender].healt;
@@ -142,6 +143,7 @@ let handler = async (m, { conn, usedPrefix }) => {
 *Last Claim :* ${lastclaim > 0 ? "❌" : "✅"}
 *Last Weekly :* ${lastweekly > 0 ? "❌" : "✅"}
 *Last Monthly :* ${lastmonthly > 0 ? "❌" : "✅"}
+*Last Yearly :* ${lasttahunan > 0 ? "❌" : "✅"}
 \n${readMore}
 `.trim();
   await conn.reply(m.chat, str, m);

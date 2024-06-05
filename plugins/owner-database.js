@@ -12,6 +12,6 @@ handler.help = ["getdb"];
 handler.tags = ["owner"];
 handler.command = /^(getdb)$/i;
 handler.register = true;
-handler.mods = true;
+handler.owner = true;
 
 module.exports = handler;

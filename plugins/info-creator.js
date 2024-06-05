@@ -26,7 +26,7 @@ TEL;type=CELL;type=VOICE;waid=${numberowner1}:${numberowner1}@s.whatsapp.net
 EMAIL:${gmail}
 ADR:;;🇮🇩 Indonesia
 URL:${instagram}
-LABEL:❤ Punya Azzah
+LABEL:TURU
 END:VCARD
 `;
 
@@ -39,7 +39,7 @@ TEL;type=CELL;type=VOICE;waid=${numberowner2}:${numberowner2}@s.whatsapp.net
 EMAIL:Privated
 ADR:;;🇮🇩 Indonesia
 URL:Privated
-LABEL:❤ Punya Oman
+LABEL:TURU
 END:VCARD
 `;
 
@@ -59,7 +59,7 @@ END:VCARD
 
     await conn.reply(
       m.chat,
-      "Ini adalah nomor owner Bot, Tolong Jangan Call / Spam."
+      "Ini adalah nomor Creator Bot, Tolong Jangan Call / Spam."
     );
   } catch (error) {
     console.error(error);

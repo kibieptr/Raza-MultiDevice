@@ -1,25 +1,22 @@
 let fetch = require("node-fetch");
-let winScore = 1000;
+const winScore = 4999;
 async function handler(m) {
-  this.game = this.game ? this.game : {};
+  let imgr =
+    "https://www6.flamingtext.com/net-fu/proxy_form.cgi?&imageoutput=true&script=sketch-name&doScale=true&scaleWidth=800&scaleHeight=500&fontsize=100&fillTextType=1&fillTextPattern=Warning!&text=";
+
+  this.familygame = this.familygame ? this.familygame : {};
   let id = "family100_" + m.chat;
-  if (id in this.game) {
+  if (id in this.familygame) {
     this.reply(
       m.chat,
       "Masih ada kuis yang belum terjawab di chat ini",
-      this.game[id].msg
+      this.familygame[id].msg
     );
     throw false;
   }
-  let src = await (
-    await fetch(
-      "https://raw.githubusercontent.com/BochilTeam/database/master/games/family100.json"
-    )
-  ).json();
-  let json = src[Math.floor(Math.random() * src.length)];
+  const json = await family100();
   let caption = `
 *Soal:* ${json.soal}
-
 Terdapat *${json.jawaban.length}* jawaban${
     json.jawaban.find((v) => v.includes(" "))
       ? `
@@ -27,12 +24,11 @@ Terdapat *${json.jawaban.length}* jawaban${
 `
       : ""
   }
-
-+${winScore} Money tiap jawaban benar
++${winScore} XP tiap jawaban benar
     `.trim();
-  this.game[id] = {
+  this.familygame[id] = {
     id,
-    msg: await m.reply(caption),
+    msg: await this.sendFile(m.chat, imgr + "Family100", "", caption, m),
     ...json,
     terjawab: Array.from(json.jawaban, () => false),
     winScore,

@@ -1,5 +1,5 @@
-const free = 50000;
-const prem = 100000;
+const free = 30;
+const prem = 50;
 const limitfree = 30;
 const limitprem = 50;
 const moneyfree = 50000;
@@ -29,6 +29,7 @@ handler.command = /^(bulanan)$/i;
 handler.group = true;
 handler.fail = null;
 handler.exp = 0;
+handler.limit = 5;
 handler.register = true;
 module.exports = handler;
 

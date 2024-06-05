@@ -1,10 +1,10 @@
 const similarity = require("similarity");
 const threshold = 0.72; // semakin tinggi nilai, semakin mirip
-async function before(m) {
-  this.game = this.game ? this.game : {};
+export async function before(m) {
+  this.familygame = this.familygame ? this.familygame : {};
   let id = "family100_" + m.chat;
-  if (!(id in this.game)) return !0;
-  let room = this.game[id];
+  if (!(id in this.familygame)) return !0;
+  let room = this.familygame[id];
   let text = m.text.toLowerCase().replace(/[^\w\s\-]+/, "");
   let isSurrender = /^((me)?nyerah|surr?ender)$/i.test(m.text);
   if (!isSurrender) {
@@ -17,7 +17,7 @@ async function before(m) {
             .map((jawaban) => similarity(jawaban, text))
         ) >= threshold
       )
-        m.reply("Dikit lagi!");
+        m.reply("❗ *Dikit Lagi!*");
       return !0;
     }
     if (room.terjawab[index]) return !0;
@@ -35,7 +35,7 @@ Terdapat *${room.jawaban.length}* jawaban${
 `
       : ""
   }
-${isWin ? `*SEMUA JAWABAN TERJAWAB*` : isSurrender ? "*MENYERAH!*" : ""}
+${isWin ? `✅ *SEMUA JAWABAN TERJAWAB*` : isSurrender ? "*MENYERAH!*" : ""}
 ${Array.from(room.jawaban, (jawaban, index) => {
   return isSurrender || room.terjawab[index]
     ? `(${index + 1}) ${jawaban} ${
@@ -48,9 +48,9 @@ ${Array.from(room.jawaban, (jawaban, index) => {
 ${isSurrender ? "" : `+${room.winScore} XP tiap jawaban benar`}
     `.trim();
   const msg = await this.reply(m.chat, caption, null, {
-    mentions: this.parseMention(caption),
+    mentions: await this.parseMention(caption),
   });
   room.msg = msg;
-  if (isWin || isSurrender) delete this.game[id];
+  if (isWin || isSurrender) delete this.familygame[id];
   return !0;
 }

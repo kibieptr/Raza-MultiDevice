@@ -41,7 +41,7 @@ let handler = async (m, { conn }) => {
   ).length;
   const text = "";
   const blurRadius = 90;
-  const font = "Font Family Name"; // Ganti dengan nama font yang sudah didaftarkan
+  const font = "italic"; // Ganti dengan nama font yang sudah didaftarkan
   const fontSize = 80;
   const width = 500;
   const height = 200;

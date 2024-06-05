@@ -63,9 +63,9 @@ Dan Mendapatkan ${itemrand}
     }
 }
 
-handler.help = ['petualang','work']
+handler.help = ['petualang']
 handler.tags = ['rpg']
-handler.command = /^(petualang|work)$/i
+handler.command = /^(petualang)$/i
 handler.group = false
 handler.fail = null
 handler.register = true

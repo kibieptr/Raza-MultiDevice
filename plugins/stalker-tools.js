@@ -10,6 +10,7 @@ let handler = async (m, {
   if (command == 'ffstalk') {
     if (!text) throw `Example : ${usedPrefix + command} 919044185`;
     try {
+	m.reply(wait);
       let ff = await fetch(`https://api.botcahx.eu.org/api/stalk/ff?id=${text}&apikey=${btc}`).then(res => res.json());
       await conn.reply(m.chat, ff.result.userNameGame, m);
     } catch (e) {
@@ -18,6 +19,7 @@ let handler = async (m, {
     }
   }
     if (command == 'mlstalk') {
+	m.reply(wait);
     if (text.length < 2) throw `Contoh: ${usedPrefix + command} 2480197|2001`;
     let [id, server] = text.split('|');
     try {
@@ -29,6 +31,7 @@ let handler = async (m, {
     }
   }
   if (command == 'supersusstalk') {
+	m.reply(wait);
     if (!text) throw `Example : ${usedPrefix + command} 20431364`;
     try {
       let sus = await fetch(`https://api.botcahx.eu.org/api/stalk/supersus?id=${text}&apikey=${btc}`).then(res => res.json());
@@ -52,6 +55,7 @@ let handler = async (m, {
     }
   }
   if (command == 'npmstalk') {
+	m.reply(wait);
     if (!text) throw `Example : ${usedPrefix + command} tiktokdl`;
     try {
         let npm = await fetch(`https://api.botcahx.eu.org/api/stalk/npm?name=${text}&apikey=${btc}`).then(res => res.json());      
@@ -83,6 +87,7 @@ let handler = async (m, {
     }
  }
  if (command == 'repostalk') {
+     m.reply(wait);
     if (!text) throw `Example : ${usedPrefix + command} RTXZY-MD`;
     try {
       let repo = await fetch(`https://api.botcahx.eu.org/api/stalk/repo?repo=${text}&apikey=${btc}`).then(res => res.json());

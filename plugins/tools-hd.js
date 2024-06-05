@@ -64,7 +64,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 
 handler.command = handler.help = ["hd", "hd2", "hd3", "removebg", "nobg"];
 handler.tags = ["tools"];
-handler.premium = false;
-handler.limit = 5;
+handler.premium = true;
+handler.limit = true;
 handler.register = true;
 module.exports = handler;

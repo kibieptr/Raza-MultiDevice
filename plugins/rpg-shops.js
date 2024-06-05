@@ -3,6 +3,7 @@ const Spotion = 100;
 const Bdiamond = 100000;
 const Sdiamond = 1000;
 const Bcommon = 100000;
+const Btiketc = 1000;
 const Scommon = 1000;
 const Suncommon = 100;
 const Buncommon = 100000;
@@ -81,8 +82,6 @@ const Smakanancentaur = 10000;
 const Bhealtmonster = 20000;
 const Bpet = 150000;
 const Spet = 1000;
-const Blimit = 25000;
-const Slimit = 20000;
 const Bexp = 550;
 const Baqua = 5000;
 const Saqua = 1000;
@@ -95,8 +94,7 @@ const Ssword = 15000;
 const Bumpan = 1500;
 const Sumpan = 100;
 const Sarmor = 50000;
-const Bpancingan = 5000000;
-const Spancingan = 500000;
+const Bfishingrod = 5000;
 const Bbatu = 500;
 const Sbatu = 100;
 const Bketake = 15;
@@ -127,7 +125,7 @@ Contoh penggunaan: *${usedPrefix}shop buy potion 1*
 
 ============================
 *Kebutuhan   |  Harga Beli*
-TiketM:     ${Bhealtmonster}
+Tiketcoin:     ${Btiketc}
 Cupon:     ${Btiketcoin}
 KoinExpg:     ${Bkoinexpg}
 
@@ -213,8 +211,8 @@ Aqua:       ${Baqua}
 Aqua:       ${Saqua}
 ============================
 *Fishing | Harga Beli*
-Pancingan:       ${Bpancingan}
-Umpan:       ${Bumpan}
+Pancingan: ${Bfishingrod}
+Umpan:     ${Bumpan}
 `.trim();
   try {
     if (/shop|toko/i.test(command)) {
@@ -753,27 +751,6 @@ Umpan:       ${Bumpan}
                 );
 
               break;
-            case "limit":
-              if (global.db.data.users[m.sender].money >= Blimit * count) {
-                global.db.data.users[m.sender].limit += count * 1;
-                global.db.data.users[m.sender].money -= Blimit * count;
-                conn.reply(
-                  m.chat,
-                  `Succes membeli ${count} Limit dengan harga ${
-                    Blimit * count
-                  } money`,
-                  m
-                );
-              } else
-                conn.reply(
-                  m.chat,
-                  `Uang anda tidak cukup untuk membeli ${count} limit dengan harga ${
-                    Blimit * count
-                  } money`.trim(),
-                  m
-                );
-
-              break;
             /*case 'exp':
                             if (global.db.data.users[m.sender].money >= Bexp * count) {
                                 global.db.data.users[m.sender].exp += count * 1
@@ -815,13 +792,34 @@ Umpan:       ${Bumpan}
               } else
                 conn.reply(
                   m.chat,
-                  `Tiketcoin anda tidak cukup untuk membeli ${count} cupon dengan harga ${
-                    Btiketcoin * count
-                  } Tiketcoin\n\nCara mendapatkan tiketcoin, anda harus memainkan semua fitur game..`.trim(),
+                  `Tiketcoin anda tidak cukup untuk membeli ${count} cupon,Cara mendapatkan tiketcoin, anda harus membeli nya..`.trim(),
                   m
                 );
 
               break;
+
+            case "tiketcoin":
+              if (global.db.data.users[m.sender].money >= Btiketc * count) {
+                global.db.data.users[m.sender].tiketcoin += count * 1;
+                global.db.data.users[m.sender].money -= Btiketc * count;
+                conn.reply(
+                  m.chat,
+                  `Succes membeli ${count} Tiketcoin dengan harga ${
+                    Btiketc * count
+                  } money`,
+                  m
+                );
+              } else
+                conn.reply(
+                  m.chat,
+                  `Uang anda tidak cukup untuk membeli ${count} Tiketcoin dengan harga ${
+                    Btiketc * count
+                  } money`.trim(),
+                  m
+                );
+
+              break;
+
             case "makananpet":
               if (global.db.data.users[m.sender].money >= Bmakananpet * count) {
                 global.db.data.users[m.sender].makananpet += count * 1;
@@ -1114,13 +1112,13 @@ Umpan:       ${Bumpan}
 
               break;
             case "pancingan":
-              if (global.db.data.users[m.sender].money >= Bpancingan * count) {
-                global.db.data.users[m.sender].pancingan += count * 1;
-                global.db.data.users[m.sender].money -= Bpancingan * count;
+              if (global.db.data.users[m.sender].money >= Bfishingrod * count) {
+                global.db.data.users[m.sender].fishingrod += count * 1;
+                global.db.data.users[m.sender].money -= Bfishingrod * count;
                 conn.reply(
                   m.chat,
                   `Succes membeli ${count} Pancingan dengan harga ${
-                    Bpancingan * count
+                    Bfishingrod * count
                   } money`,
                   m
                 );
@@ -1505,19 +1503,6 @@ Umpan:       ${Bumpan}
                 );
               } else conn.reply(m.chat, `Aqua anda tidak cukup`, m);
               break;
-            case "pancingan":
-              if (global.db.data.users[m.sender].pancingan >= count * 1) {
-                global.db.data.users[m.sender].pancingan -= count * 1;
-                global.db.data.users[m.sender].money += Spancingan * count;
-                conn.reply(
-                  m.chat,
-                  `Succes menjual ${count} pancingan, dan anda mendapatkan ${
-                    Spancingan * count
-                  } money`,
-                  m
-                );
-              } else conn.reply(m.chat, `Pancingan anda tidak cukup`, m);
-              break;
             case "iron":
               if (global.db.data.users[m.sender].iron >= count * 1) {
                 global.db.data.users[m.sender].iron -= count * 1;
@@ -1569,19 +1554,6 @@ Umpan:       ${Bumpan}
                   m
                 );
               } else conn.reply(m.chat, `Batu anda tidak cukup`, m);
-              break;
-            case "limit":
-              if (global.db.data.users[m.sender].limit >= count * 1) {
-                global.db.data.users[m.sender].limit -= count * 1;
-                global.db.data.users[m.sender].money += Slimit * count;
-                conn.reply(
-                  m.chat,
-                  `Succes menjual ${count} limit, dan anda mendapatkan ${
-                    Slimit * count
-                  } money`,
-                  m
-                );
-              } else conn.reply(m.chat, `Limit anda tidak cukup`, m);
               break;
             case "diamond":
               if (global.db.data.users[m.sender].diamond >= count * 1) {
@@ -2124,27 +2096,6 @@ Umpan:       ${Bumpan}
               m.chat,
               `Uang anda tidak cukup untuk membeli ${count} pet random dengan harga ${
                 Bpet * count
-              } money`.trim(),
-              m
-            );
-
-          break;
-        case "limit":
-          if (global.db.data.users[m.sender].money >= Blimit * count) {
-            global.db.data.users[m.sender].limit += count * 1;
-            global.db.data.users[m.sender].money -= Blimit * count;
-            conn.reply(
-              m.chat,
-              `Succes membeli ${count} Limit dengan harga ${
-                Blimit * count
-              } money`,
-              m
-            );
-          } else
-            conn.reply(
-              m.chat,
-              `Uang anda tidak cukup untuk membeli ${count} limit dengan harga ${
-                Blimit * count
               } money`.trim(),
               m
             );
@@ -2910,19 +2861,6 @@ Umpan:       ${Bumpan}
               m
             );
           } else conn.reply(m.chat, `Batu anda tidak cukup`, m);
-          break;
-        case "limit":
-          if (global.db.data.users[m.sender].limit >= count * 1) {
-            global.db.data.users[m.sender].limit -= count * 1;
-            global.db.data.users[m.sender].money += Slimit * count;
-            conn.reply(
-              m.chat,
-              `Succes menjual ${count} limit, dan anda mendapatkan ${
-                Slimit * count
-              } money`,
-              m
-            );
-          } else conn.reply(m.chat, `Limit anda tidak cukup`, m);
           break;
         case "diamond":
           if (global.db.data.users[m.sender].diamond >= count * 1) {

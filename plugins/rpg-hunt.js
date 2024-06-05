@@ -83,16 +83,16 @@ let handler = async (m, { conn, usedPrefix, text, args, command }) => {
   Mendapatkan:
   ${new Intl.NumberFormat("en-US").format(coins)} Money
   ${new Intl.NumberFormat("en-US").format(exp)} XP
-  Berkurang -${healing} Health, Tersisa ${player.health} Health
+  Berkurang -${healing} Health, Tersisa ${player.healt} Health
   
   +1 Tiketcoin`;
     await conn.reply(m.chat, pesan, m, { mentions: conn.parseMention(pesan) });
-  } else throw `Tunggu ${timers} Untuk Berburu Lagi`;
+  } else throw `Tunggu ${timers} Untuk Hunting Lagi`;
 };
 
-handler.help = ["hunter"];
+handler.help = ["hunt"];
 handler.tags = ["rpg"];
-handler.command = /^hunter/i;
+handler.command = /^hunt/i;
 handler.limit = true;
 handler.group = true;
 handler.fail = null;
